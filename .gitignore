@@ -1,0 +1,16 @@
+
+# Run npm init creates package.json which defines the
+# haters
+# entry point as index.js
+
+
+
+#ignore packages installed by npm
+node_modules
+*~
+.DS_Store
+credentials.js
+
+# Create a Git repository with git init
+# Add files with 'git add -A' in the terminal
+# Commit the changes with 'git commit -m "Initial Commit"'
