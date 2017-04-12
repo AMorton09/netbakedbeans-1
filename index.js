@@ -11,6 +11,9 @@ app.use(require('body-parser').urlencoded({
 
 var formidable = require('formidable');
 
+var credentials = require('./credentials.js');
+app.use(require('cookie-parser')(credentials.cookieSecret));
+
 var handlebars = require('express-handlebars').create({defaultLayout:'main'})
 ;
 app.engine('handlebars',handlebars.engine);
