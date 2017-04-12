@@ -5,9 +5,7 @@ var app = express();
 // keeps server info out of header
 app.disable('x-powered-by');
 
-app.use(require('body-parser').urlencoded({
-  extended=true
-}));
+
 
 var formidable = require('formidable');
 
@@ -19,7 +17,7 @@ var handlebars = require('express-handlebars').create({defaultLayout:'main'})
 app.engine('handlebars',handlebars.engine);
 app.set('view engine','handlebars')
 
-
+app.use(require('body-parser').urlencoded({extended: true}));
 
 app.set('port',process.env.PORT || 3000);
 
