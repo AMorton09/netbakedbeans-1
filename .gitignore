@@ -14,3 +14,6 @@ credentials.js
 # Create a Git repository with git init
 # Add files with 'git add -A' in the terminal
 # Commit the changes with 'git commit -m "Initial Commit"'
+
+#git remote add origin https://github.com/jpizzitola/netbakedbeans.git
+#git push -u origin master
