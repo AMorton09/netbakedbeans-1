@@ -26,9 +26,15 @@ app.set('port',process.env.PORT || 3000);
 
 
 app.use(express.static(__dirname + '/public'));
+
 app.get('/',function(req,res){
   res.render('home');
 });
+
+app.get('/cart',function(req,res){
+  res.render('cart');
+});
+
 
 app.get('/login',function(req,res){
   res.render('login');
