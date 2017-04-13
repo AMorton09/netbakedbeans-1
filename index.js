@@ -30,6 +30,19 @@ app.get('/',function(req,res){
   res.render('home');
 });
 
+app.get('/login',function(req,res){
+  res.render('login');
+});
+
+app.get('/welcome',function(req,res){
+  res.render('customer');
+});
+
+
+app.get('/register',function(req,res){
+  res.render('register');
+});
+
 app.use(function(req, res, next){
   console.log('Looking for URL : ' + req.url);
   next();
