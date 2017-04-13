@@ -1,0 +1,47 @@
+<div style='background:#FFFFFF; font-family: Courier New, Courier; font-size: 10pt; COLOR: #000000; padding-bottom: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px;'>mport&nbsp;java.util.ArrayList;
+<br/><strong><font color='#7f0055'>import</font></strong>&nbsp;javax.servlet.http.HttpServletRequest;
+<br/><strong><font color='#7f0055'>import</font></strong>&nbsp;javax.servlet.http.HttpServletResponse;
+<br/><strong><font color='#7f0055'>import</font></strong>&nbsp;org.apache.struts.action.ActionForm;
+<br/><strong><font color='#7f0055'>import</font></strong>&nbsp;org.apache.struts.action.ActionForward;
+<br/><strong><font color='#7f0055'>import</font></strong>&nbsp;org.apache.struts.action.ActionMapping;
+<br/>
+<br/><font color='#2040a0'>/**
+<br/>&nbsp;*
+<br/>&nbsp;*&nbsp;<strong>@author</strong>&nbsp;Patrick
+<br/>&nbsp;*/</font>
+<br/><strong><font color='#7f0055'>public</font></strong>&nbsp;<strong><font color='#7f0055'>class</font></strong>&nbsp;ProductSearchAction&nbsp;<strong><font color='#7f0055'>extends</font></strong>&nbsp;org.apache.struts.action.Action
+<br/>{
+<br/>
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;<strong><font color='#7f0055'>private</font></strong>&nbsp;<strong><font color='#7f0055'>static</font></strong>&nbsp;<strong><font color='#7f0055'>final</font></strong>&nbsp;String&nbsp;SUCCESS&nbsp;=&nbsp;<font color='#2a00ff'>"success"</font>;
+<br/>
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;<font color='#2040a0'>/**
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;This&nbsp;is&nbsp;the&nbsp;action&nbsp;called&nbsp;from&nbsp;the&nbsp;Struts&nbsp;framework.
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;<strong>@param</strong>&nbsp;mapping&nbsp;The&nbsp;ActionMapping&nbsp;used&nbsp;to&nbsp;select&nbsp;this&nbsp;instance.
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;<strong>@param</strong>&nbsp;form&nbsp;The&nbsp;optional&nbsp;ActionForm&nbsp;bean&nbsp;for&nbsp;this&nbsp;request.
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;<strong>@param</strong>&nbsp;request&nbsp;The&nbsp;HTTP&nbsp;Request&nbsp;we&nbsp;are&nbsp;processing.
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;<strong>@param</strong>&nbsp;response&nbsp;The&nbsp;HTTP&nbsp;Response&nbsp;we&nbsp;are&nbsp;processing.
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;<strong>@throws</strong>&nbsp;java.lang.Exception
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;<strong>@return</strong>
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</font>
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;<font color='#646464'>@Override</font>
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;<strong><font color='#7f0055'>public</font></strong>&nbsp;ActionForward&nbsp;execute(ActionMapping&nbsp;mapping,&nbsp;ActionForm&nbsp;form,
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HttpServletRequest&nbsp;request,&nbsp;HttpServletResponse&nbsp;response)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong><font color='#7f0055'>throws</font></strong>&nbsp;Exception
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;{
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ProductRegisterDAO&nbsp;db&nbsp;=&nbsp;<strong><font color='#7f0055'>new</font></strong>&nbsp;ProductRegisterDAO();
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Product&nbsp;p&nbsp;=&nbsp;<strong><font color='#7f0055'>new</font></strong>&nbsp;Product();
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong><font color='#7f0055'>int</font></strong>&nbsp;id&nbsp;=&nbsp;!request.getParameter(<font color='#2a00ff'>"search"</font>).equals(<font color='#2a00ff'>""</font>)&nbsp;&&&nbsp;!p.tryParse(request.getParameter(<font color='#2a00ff'>"search"</font>))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;?&nbsp;Integer.parseInt(request.getParameter(<font color='#2a00ff'>"search"</font>))&nbsp;:&nbsp;-1;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ArrayList<Product>&nbsp;products&nbsp;=&nbsp;<strong><font color='#7f0055'>new</font></strong>&nbsp;ArrayList<>();
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;products&nbsp;=&nbsp;db.show();
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;request.setAttribute(<font color='#2a00ff'>"products"</font>,&nbsp;products);
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ArrayList<Product>&nbsp;productSearch&nbsp;=&nbsp;<strong><font color='#7f0055'>new</font></strong>&nbsp;ArrayList<>();
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;productSearch&nbsp;=&nbsp;db.search(id);
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;request.setAttribute(<font color='#2a00ff'>"productSearch"</font>,&nbsp;productSearch);
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong><font color='#7f0055'>return</font></strong>&nbsp;mapping.findForward(SUCCESS);
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;}
+<br/>}
+<br/>
+<br/>
+<br/><div style='text-align:right;BORDER-TOP: #ccc 1px dashed'><a href="http://www.togotutor.com/code-to-html/java-to-html.php" target="_blank">Code Formatted by ToGoTutor</a></div></div>
