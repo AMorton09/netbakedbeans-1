@@ -101,6 +101,8 @@ app.get('/file-upload', function(req, res){
 
 app.post('/register', (req, res, next) => {
   var data = req.body;
+  data.push({admin: 0});
+  console.log(data);
 
   // Save the data to the database.
   getModel().create(data, (err, savedData) => {
@@ -257,6 +259,13 @@ app.use(function(err, req, res, next) {
   res.render('500');
 });
 
+app.use((err, req, res, next) => {
+  // Format error and forward to generic error handler for logging and
+  // responding to the request
+  err.response = err.message;
+  console.log(err.message);
+  next(err);
+});
 
 app.listen(app.get('port'), function(){
   console.log("Express started on http://localhost:" + app.get('port') + ' press Ctrl-C to terminate');

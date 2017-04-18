@@ -145,6 +145,7 @@ router.use((err, req, res, next) => {
   // Format error and forward to generic error handler for logging and
   // responding to the request
   err.response = err.message;
+  console.log(err.message);
   next(err);
 });
 

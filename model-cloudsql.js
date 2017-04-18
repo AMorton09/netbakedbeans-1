@@ -19,13 +19,14 @@ const config = require('./config');
 
 function getConnection () {
   const options = {
-    user: config.get('MYSQL_USER'),
-    password: config.get('MYSQL_PASSWORD'),
-    database: 'rentaldb'
+    host: "35.185.43.206",
+    user: "root",
+    password: "qsDFwGKfDEJ4Pkhz",
+    database: 'sakila'
     
   };
 
-  options.socketPath = config.get('INSTANCE_CONNECTION_NAME');
+  //options.socketPath = config.get('INSTANCE_CONNECTION_NAME');
 
   return mysql.createConnection(options);
 }
@@ -35,7 +36,7 @@ function list (limit, token, cb) {
   token = token ? parseInt(token, 10) : 0;
   const connection = getConnection();
   connection.query(
-    'SELECT * FROM `books` LIMIT ? OFFSET ?', [limit, token],
+    'SELECT * FROM `users` LIMIT ? OFFSET ?', [limit, token],
     (err, results) => {
       if (err) {
         cb(err);
@@ -52,21 +53,22 @@ function list (limit, token, cb) {
 // [START create]
 function create (data, cb) {
   const connection = getConnection();
-  connection.query('INSERT INTO `users` SET ?', data, (err, res) => {
+  connection.query('INSERT INTO users SET ?', data, (err, res) => {
     if (err) {
-      cb(err);                  
+      cb(err);
+      console.log(err);                  
       return;
     }
-    read(res.insertId, cb);
+    read(res.insertcustomer_id, cb);
   });
   connection.end();
 }
 // [END create]
 
-function read (id, cb) {
+function read (customer_id, cb) {
   const connection = getConnection();
   connection.query(
-    'SELECT * FROM `books` WHERE `id` = ?', id, (err, results) => {
+    'SELECT * FROM `users` WHERE `customer_id` = ?', customer_id, (err, results) => {
       if (err) {
         cb(err);
         return;
@@ -84,28 +86,28 @@ function read (id, cb) {
 }
 
 // [START update]
-function update (id, data, cb) {
+function update (customer_id, data, cb) {
   const connection = getConnection();
   connection.query(
-    'UPDATE `books` SET ? WHERE `id` = ?', [data, id], (err) => {
+    'UPDATE `users` SET ? WHERE `customer_id` = ?', [data, customer_id], (err) => {
       if (err) {
         cb(err);
         return;
       }
-      read(id, cb);
+      read(customer_id, cb);
     });
   connection.end();
 }
 // [END update]
 
-function _delete (id, cb) {
+function _delete (customer_id, cb) {
   const connection = getConnection();
-  connection.query('DELETE FROM `books` WHERE `id` = ?', id, cb);
+  connection.query('DELETE FROM `users` WHERE `customer_id` = ?', customer_id, cb);
   connection.end();
 }
 
 module.exports = {
-  createSchema: createSchema,
+  
   list: list,
   create: create,
   read: read,
@@ -113,48 +115,6 @@ module.exports = {
   delete: _delete
 };
 
-if (module === require.main) {
-  const prompt = require('prompt');
-  prompt.start();
 
-  console.log(
-    `Running this script directly will allow you to initialize your mysql database.
-    This script will not modify any existing tables.`);
 
-  prompt.get(['user', 'password'], (err, result) => {
-    if (err) {
-      return;
-    }
-    createSchema(result);
-  });
-}
 
-function createSchema (config) {
-  const connection = mysql.createConnection(extend({
-    multipleStatements: true
-  }, config));
-
-  connection.query(
-    `CREATE DATABASE IF NOT EXISTS \`bookshelf\`
-      DEFAULT CHARACTER SET = 'utf8'
-      DEFAULT COLLATE 'utf8_general_ci';
-    USE \`bookshelf\`;
-    CREATE TABLE IF NOT EXISTS \`bookshelf\`.\`books\` (
-      \`id\` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-      \`title\` VARCHAR(255) NULL,
-      \`author\` VARCHAR(255) NULL,
-      \`publishedDate\` VARCHAR(255) NULL,
-      \`imageUrl\` VARCHAR(255) NULL,
-      \`description\` TEXT NULL,
-      \`createdBy\` VARCHAR(255) NULL,
-      \`createdById\` VARCHAR(255) NULL,
-    PRIMARY KEY (\`id\`));`,
-    (err) => {
-      if (err) {
-        throw err;
-      }
-      console.log('Successfully created schema');
-      connection.end();
-    }
-  );
-}
