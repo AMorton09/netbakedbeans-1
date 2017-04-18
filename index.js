@@ -1,3 +1,29 @@
+function setTheme(themeColors) {
+  var $styleSheet = $('#custom-theming');
+  var source = $styleSheet.html();
+  $styleSheet.remove();
+
+  var template = Handlebars.compile(source);
+
+  var parsedStyle = template(themeColors);
+  var $newStyle = $('<style id="custom-theming"></style>');
+  
+  $('head').append($newStyle.html(parsedStyle));
+  }
+  var buttonElement = document.getElementById('save');
+
+  buttonElement.addEventListener('click', function() {
+    var navBackgroundColor = $('#nav-bg').val();
+    var fontColor = $('#nav-font').val();
+  
+    var themeColors = {
+    navBackgroundColor: navBackgroundColor,
+    textColor: fontColor
+  };
+  
+  setTheme(themeColors);
+});
+
 var express= require('express');
 
 var app = express();
@@ -28,7 +54,7 @@ app.set('port',process.env.PORT || 3000);
 app.use(express.static(__dirname + '/public'));
 
 app.get('/',function(req,res){
-  res.render('home');
+  res.redirect('login')
 });
 
 app.get('/cart',function(req,res){
