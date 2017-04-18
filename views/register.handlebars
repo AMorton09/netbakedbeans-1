@@ -1,11 +1,11 @@
 <div class="page-header">
 <h3>Register new account</h3>
-<form  method = "post">
+<form class="form-horizontal"  method = "post">
  
-<div>
+<div class="form-group">
 	
-    <label for="firstname">First Name:</label>
-    <input name="fname" id="fname" value=""/>
+    <label class="control-label" for="firstname">First Name:</label>
+    <input name="fname" class="form-control" id="fname" value=""/>
 </div>
  
 <div>
@@ -20,16 +20,16 @@
     <input name="addr" id="addr" value=""/>
 </div>
  
-<div>
+<div class="form-group">
 
     <label for="email">Email:</label>
-    <input name="email" id="email" value=""/>
+    <input name="email" class="form-control" type="email" id="email" value=""/>
 </div>
  
 <div>
 	
     <label for="password">Password:</label>
-    <input name="password" id="password" value=""/>
+    <input name="password" type="password" id="password" value=""/>
 </div>
 <div>
     
@@ -45,7 +45,8 @@
     <input name="ccv" id="ccv" value=""/>
 </div>
 <input name="admin" type="hidden" value="0"/>
-<input type="submit" value="Register New Account"/>  
+
+<button type="submit" class="btn btn-default"> Register New Account </button>
 </form>
 
 
