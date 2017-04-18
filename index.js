@@ -1,5 +1,6 @@
 var express= require('express');
-
+var config = require('./config');
+var path = require('path');
 var app = express();
 
 // keeps server info out of header
@@ -23,12 +24,14 @@ app.set('port',process.env.PORT || 3000);
 
 //do more imports here
 
-
+function getModel () {
+  return require(`./model-cloudsql`);
+}
 
 app.use(express.static(__dirname + '/public'));
 
 app.get('/',function(req,res){
-  res.render('home');
+  res.redirect('login');
 });
 
 app.get('/cart',function(req,res){
@@ -95,6 +98,22 @@ app.get('/file-upload', function(req, res){
     year: now.getFullYear(),
     month: now.getMonth() });
   });
+
+app.post('/register', (req, res, next) => {
+  var data = req.body;
+
+  // Save the data to the database.
+  getModel().create(data, (err, savedData) => {
+    if (err) {
+      console.log(err);
+      next(err);
+      return;
+    }
+    else{
+    res.redirect(`${req.baseUrl}/${savedData.id}`);
+}
+  });
+});
 
   app.post('/file-upload/:year/:month',
   function(req, res){
