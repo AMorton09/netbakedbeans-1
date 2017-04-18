@@ -17,13 +17,12 @@ const extend = require('lodash').assign;
 const mysql = require('mysql');
 const config = require('./config');
 
-function getConnection () {
+function getConnectionGCloudSql() {
   const options = {
-    host: "35.185.43.206",
-    user: "root",
-    password: "qsDFwGKfDEJ4Pkhz",
+    host: '35.185.43.206',
+    user: 'root',
+    password: 'qsDFwGKfDEJ4Pkhz',
     database: 'sakila'
-    
   };
 
   //options.socketPath = config.get('INSTANCE_CONNECTION_NAME');
@@ -32,18 +31,19 @@ function getConnection () {
 }
 
 // [START list]
-function list (limit, token, cb) {
+function list(limit, token, callback) {
   token = token ? parseInt(token, 10) : 0;
   const connection = getConnection();
   connection.query(
-    'SELECT * FROM `users` LIMIT ? OFFSET ?', [limit, token],
-    (err, results) => {
-      if (err) {
-        cb(err);
+    'SELECT * FROM `users` LIMIT ? OFFSET ?',
+    [limit, token],
+    (error, results) => {
+      if (error) {
+        callback(error);
         return;
       }
       const hasMore = results.length === limit ? token + results.length : false;
-      cb(null, results, hasMore);
+      callback(null, results, hasMore);
     }
   );
   connection.end();
@@ -51,70 +51,88 @@ function list (limit, token, cb) {
 // [END list]
 
 // [START create]
-function create (data, cb) {
-  const connection = getConnection();
-  connection.query('INSERT INTO users SET ?', data, (err, res) => {
-    if (err) {
-      cb(err);
-      console.log(err);                  
-      return;
-    }
-    read(res.insertcustomer_id, cb);
-  });
-  connection.end();
+function registerUser(registerFormData, callback) {
+  const gcloudSqlConnection = getConnectionGCloudSql();
+  try {
+    gcloudSqlConnection.query(
+      'INSERT INTO `users` SET ?',
+      registerFormData,
+      (error, response) => {
+        //sends error to app.js to display 500 error
+        if (error) {
+          callback(error);
+          //logs error in console for debugging
+          console.log(error);
+          return;
+        }
+        console.log('shit worked');
+        console.log(response);
+        //from gcloud it is the customer id that is assigned by the server
+        read(response.insertcustomer_id, callback);
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
+  gcloudSqlConnection.end();
 }
 // [END create]
 
-function read (customer_id, cb) {
-  const connection = getConnection();
+function read(customer_id, callback) {
+  const connection = getConnectionGCloudSql();
   connection.query(
-    'SELECT * FROM `users` WHERE `customer_id` = ?', customer_id, (err, results) => {
-      if (err) {
-        cb(err);
+    'SELECT * FROM `users` WHERE `customer_id` = ?',
+    customer_id,
+    (error, results) => {
+      if (error) {
+        callback(error);
         return;
       }
       if (!results.length) {
-        cb({
+        callback({
           code: 404,
           message: 'Not found'
         });
         return;
       }
-      cb(null, results[0]);
-    });
+      callback(null, results[0]);
+    }
+  );
   connection.end();
 }
 
 // [START update]
-function update (customer_id, data, cb) {
-  const connection = getConnection();
+function update(customer_id, data, callback) {
+  const connection = getConnectionGCloudSql();
   connection.query(
-    'UPDATE `users` SET ? WHERE `customer_id` = ?', [data, customer_id], (err) => {
-      if (err) {
-        cb(err);
+    'UPDATE `users` SET ? WHERE `customer_id` = ?',
+    [data, customer_id],
+    error => {
+      if (error) {
+        callback(error);
         return;
       }
-      read(customer_id, cb);
-    });
+      read(customer_id, callback);
+    }
+  );
   connection.end();
 }
 // [END update]
 
-function _delete (customer_id, cb) {
-  const connection = getConnection();
-  connection.query('DELETE FROM `users` WHERE `customer_id` = ?', customer_id, cb);
+function _delete(customer_id, callback) {
+  const connection = getConnectionGCloudSql();
+  connection.query(
+    'DELETE FROM `users` WHERE `customer_id` = ?',
+    customer_id,
+    callback
+  );
   connection.end();
 }
 
 module.exports = {
-  
   list: list,
-  create: create,
+  registerUser: registerUser,
   read: read,
   update: update,
   delete: _delete
 };
-
-
-
-
