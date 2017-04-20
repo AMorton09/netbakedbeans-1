@@ -1,11 +1,19 @@
 <div class="page-header">
 <h3>About Us</h3>
 <br><br>
-
 {{#each movies}}
-<div class= 'movies'>
-<p> MOVIE THIS BETTER FUCKING WORK: {{this.title}} </p>
-</div>
+<table bgcolor="grey" cellpadding="10">
+  <tr>
+    <th bgcolor="white">Title</th>
+    <th bgcolor="white">Description</th>
+    <th bgcolor="white">Rating</th>
+  </tr>
+  <tr>
+    <td bgcolor="grey" width="15%">{{this.title}}</td>
+    <td bgcolor="grey" width="70%">{{this.description}}</td>
+    <td bgcolor="grey" width="15%">{{this.rating}}</td>
+  </tr>
+</table>
 {{/each}}
 
 
