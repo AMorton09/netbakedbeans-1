@@ -133,13 +133,16 @@ app.post("/addemployee", (req, res, next) => {
 
 
 app.get('/movies', (req, res, next) => {
-  getModel().list(10, req.query.pageToken, (err, entities, cursor) => {
+  getModel().list(10000, req.query.pageToken, (err, entities, cursor) => {
     if (err) {
       next(err);
       return;
     }
+    console.log(entities);
+
     res.render('movies', {
       movies: entities,
+
       nextPageToken: cursor
     });
   });
