@@ -1,0 +1,12 @@
+runtime: nodejs
+env: flex
+
+env_variables:
+  MYSQL_USER: root
+  MYSQL_PASSWORD: qsDFwGKfDEJ4Pkhz
+  MYSQL_DATABASE: rentaldb
+
+  INSTANCE_CONNECTION_NAME: YOUR_INSTANCE_CONNECTION_NAME
+
+beta_settings:
+  cloud_sql_instances: netbakedbeans-163904:us-east1:rentaldb

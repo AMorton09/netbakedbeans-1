@@ -1,0 +1,15 @@
+ideal
+caching auth into a browser session cookie with variable name is logged in as a key name with bool of t/f look into this
+how we did it in ours to finish needs to be added into the con
+
+
+
+ADD readme.md done in markdown
+
+have an after were done we should of done this pow-wow
+
+ADD markdown package put this into trello
+
+
+tables
+https://hangouts.google.com/hangouts/redirect?dest=http%3A%2F%2Fgetbootstrap.com%2Fgetting-started%2F%23examples
