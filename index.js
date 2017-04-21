@@ -21,7 +21,7 @@ app.use(require("body-parser").urlencoded({ extended: true }));
 
 app.set("port", process.env.PORT || 3000);
 
-//do more imports here
+
 
 function getModel() {
   return require(`./model-cloudsql`);
@@ -42,8 +42,37 @@ app.get("/customer", function(req, res) {
 });
 
 app.get("/login", function(req, res) {
+
   res.render("login");
 });
+
+
+app.post("/loginAuth", (req, res, next) => {
+ var loginFormData = req.body;
+ 
+  getModel().loginAuth(loginFormData, (error, savedData) => {
+
+      if(error){
+      console.log("search DATA:====");
+      console.log(error);
+      res.render(`login`);
+
+  }
+  else{
+
+    console.log(savedData);
+    res.cookie(savedData, { expire: new Date() + 9999 })
+
+    res.render('customer');
+  }
+  });
+});
+
+
+
+
+
+
 
 app.get("/addemployee", function(req, res) {
   res.render("addemployee");
@@ -103,7 +132,7 @@ app.get("/file-upload", function(req, res) {
 
 app.post("/register", (req, res, next) => {
   var registerFormData = req.body;
-  //registerFormData.push({admin: 0});
+ 
   console.log(registerFormData);
 
   // Save the data to the database.
@@ -114,6 +143,13 @@ app.post("/register", (req, res, next) => {
       console.log(savedData);
       res.redirect(`login`);
   });
+});
+
+
+app.post("/rent", (req, res, next) => {
+  
+      res.redirect(`cart`);
+  
 });
 
 app.post("/addemployee", (req, res, next) => {
@@ -164,11 +200,11 @@ app.post("/file-upload/:year/:month", function(req, res) {
 });
 
 // Demonstrate how to set a cookie
-app.get("/cookie", function(req, res) {
+app.get("/nothing", function(req, res) {
   // Set the key and value as well as expiration
   res
-    .cookie("username", "DerekBanas", { expire: new Date() + 9999 })
-    .send("username has the value of : DerekBanas");
+    .cookie(res, { expire: new Date() + 9999 })
+    .send(res);
 });
 
 // Show stored cookies in the console
