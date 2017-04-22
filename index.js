@@ -37,7 +37,7 @@ app.post("/removefromcart", (req, res, next) => {
       var cartID = req.body;
       console.log(cartID);
       getModel().removeFromCart(cartID,(error, savedData) =>{
-        
+
   });
       console.log("i ran here");
       res.redirect(`cart`);
@@ -108,6 +108,11 @@ app.get("/about", function(req, res) {
   // Point at the about.handlebars view
   // Allow for the test specified in tests-about.js
   res.render("about");
+});
+app.get("/logout", function(req, res) {
+  // Point at the about.handlebars view
+  // Allow for the test specified in tests-about.js
+  res.render("logout");
 });
 
 app.get("/contact", function(req, res) {
