@@ -177,27 +177,27 @@ function addToCart(rentalFormDataSQL, callback) {
   gcloudSqlConnection.end();
 }
 
-function removeFromCart(cartData, callback) {
+function removeFromCart(cartID, callback) {
   const gcloudSqlConnection = getConnectionGCloudSql();
-
+    
     gcloudSqlConnection.query(
-      'DELETE FROM `cartItems` WHERE `cart_id` = ?',
-      //cart_id created as auto incrementing id for each cart item to make removal easier
-      cartData,
+      'DELETE FROM `cartItems` WHERE `cart_id` = '+cartID.cart_id+';',
+      
       (error, response) => {
         //sends error to app.js to display 500 error
         if (error) {
+          console.log("error");
           callback(error);
 
           return;
         }
-        console.log('it worked!');
+        console.log('it worked! RAN STATEMENT');
         console.log(response);
-
+        gcloudSqlConnection.end();
               }
             );
-
-          gcloudSqlConnection.end();
+          
+          
         }
 
 module.exports = {

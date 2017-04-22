@@ -33,6 +33,16 @@ app.get("/", function(req, res) {
   res.redirect("login");
 });
 
+app.post("/removefromcart", (req, res, next) => {
+      var cartID = req.body;
+      console.log(cartID);
+      getModel().removeFromCart(cartID,(error, savedData) =>{
+        
+  });
+      console.log("i ran here");
+      res.redirect(`cart`);
+});
+
 app.get("/customer", function(req, res) {
   res.render("customer");
 });
@@ -147,13 +157,7 @@ app.post("/rent", (req, res, next) => {
       res.redirect(`cart`);
 });
 
-app.post("/removefromcart", (req, res, next) => {
-      var cartData = req.body;
-      console.log(cartData);
-      getModel().removeFromCart(cartData,(error, savedData) =>{
-  });
-      res.redirect(`cart`);
-});
+
 
 app.post("/addemployee", (req, res, next) => {
   var registerFormData = req.body;
