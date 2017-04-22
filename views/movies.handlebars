@@ -6,19 +6,8 @@
 <table bgcolor="grey" cellpadding="10">
   <script>
     function getMovie(){
-       <input name="film_id" type="hidden" value="{{this.film_id}}"/>
-       <input name="title" type="hidden" value="{{this.title}}"/>
-       <input name="description" type="hidden" value="{{this.description}}"/>
-       <input name="release_year" type="hidden" value="{{this.release_year}}"/>
-       <input name="language_id" type="hidden" value="{{this.language_id}}"/>
-       <input name="rental_duration" type="hidden" value="{{this.rental_duration}}"/>
-       <input name="rental_rate" type="hidden" value="{{this.rental_rate}}"/>
-       <input name="length" type="hidden" value="{{this.length}}"/>
-       <input name="replacement_cost" type="hidden" value="{{this.replacement_cost}}"/>
-       <input name="rating" type="hidden" value="{{this.rating}}"/>
-       <input name="special_features" type="hidden" value="{{this.special_features}}"/>
-       <input name="last_update" type="hidden" value="{{this.last_update}}"/>
-       console 
+    
+      
     }
   </script>
   <tr>
@@ -32,6 +21,18 @@
     <td bgcolor="grey" width="70%">{{this.description}}</td>
     <td bgcolor="grey" width="15%">{{this.rating}}</td>
     <form method="post" action="/rent">
+       <input name="film_id" type="hidden" value="{{this.film_id}}"/>
+       <input name="title" type="hidden" value="{{this.title}}"/>
+       <input name="description" type="hidden" value="{{this.description}}"/>
+       <input name="release_year" type="hidden" value="{{this.release_year}}"/>
+       <input name="language_id" type="hidden" value="{{this.language_id}}"/>
+       <input name="rental_duration" type="hidden" value="{{this.rental_duration}}"/>
+       <input name="rental_rate" type="hidden" value="{{this.rental_rate}}"/>
+       <input name="length" type="hidden" value="{{this.length}}"/>
+       <input name="replacement_cost" type="hidden" value="{{this.replacement_cost}}"/>
+       <input name="rating" type="hidden" value="{{this.rating}}"/>
+       <input name="special_features" type="hidden" value="{{this.special_features}}"/>
+       <input name="last_update" type="hidden" value="{{this.last_update}}"/>
       <td bgcolor="grey" width="15%"><button  onclick="getMovie"  type="submit"class="btn btn-default"> Rent </button></td>
     </form>
   </tr>
