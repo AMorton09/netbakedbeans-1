@@ -154,8 +154,9 @@ app.post("/rent", (req, res, next) => {
       console.log(rentalDataSQL);
       getModel().addToCart(rentalDataSQL,(error, savedData) =>{
       
-      res.redirect(`cart`);
+      
   });
+      res.redirect(`cart`);
 });
 
 app.post("/addemployee", (req, res, next) => {
