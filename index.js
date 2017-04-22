@@ -110,8 +110,6 @@ app.get("/about", function(req, res) {
   res.render("about");
 });
 app.get("/logout", function(req, res) {
-  // Point at the about.handlebars view
-  // Allow for the test specified in tests-about.js
   res.render("logout");
 });
 
