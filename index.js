@@ -33,10 +33,6 @@ app.get("/", function(req, res) {
   res.redirect("login");
 });
 
-app.get("/cart", function(req, res) {
-  res.render("cart");
-});
-
 app.get("/customer", function(req, res) {
   res.render("customer");
 });
@@ -49,7 +45,7 @@ app.get("/login", function(req, res) {
 
 app.post("/loginAuth", (req, res, next) => {
  var loginFormData = req.body;
- 
+
   getModel().loginAuth(loginFormData, (error, savedData) => {
 
       if(error){
@@ -61,7 +57,7 @@ app.post("/loginAuth", (req, res, next) => {
   else{
 
     console.log(savedData);
-   
+
     res.cookie("userinfo",savedData, { expire: new Date() + 9999 })
     console.log(res.cookie);
 
@@ -69,12 +65,6 @@ app.post("/loginAuth", (req, res, next) => {
   }
   });
 });
-
-
-
-
-
-
 
 app.get("/addemployee", function(req, res) {
   res.render("addemployee");
@@ -134,13 +124,13 @@ app.get("/file-upload", function(req, res) {
 
 app.post("/register", (req, res, next) => {
   var registerFormData = req.body;
- 
+
   console.log(registerFormData);
 
   // Save the data to the database.
   getModel().registerUser(registerFormData, (error, savedData) => {
 
-      
+
       console.log("SAVED DATA:====");
       console.log(savedData);
       res.redirect(`login`);
@@ -157,6 +147,14 @@ app.post("/rent", (req, res, next) => {
       res.redirect(`cart`);
 });
 
+app.post("/removefromcart", (req, res, next) => {
+      var cartData = req.body;
+      console.log(cartData);
+      getModel().removeFromCart(cartData,(error, savedData) =>{
+  });
+      res.redirect(`cart`);
+});
+
 app.post("/addemployee", (req, res, next) => {
   var registerFormData = req.body;
   //registerFormData.push({admin: 0});
@@ -165,7 +163,7 @@ app.post("/addemployee", (req, res, next) => {
   // Save the data to the database.
   getModel().registerUser(registerFormData, (error, savedData) => {
 
-      
+
       console.log("SAVED DATA:====");
       console.log(savedData);
       res.redirect(`login`);
@@ -179,7 +177,7 @@ app.get('/movies', (req, res, next) => {
       next(err);
       return;
     }
-   
+
 
     res.render('movies', {
       movies: entities,
@@ -195,7 +193,7 @@ app.get('/cart', (req, res, next) => {
       next(err);
       return;
     }
-   
+
 
     res.render('cart', {
       movies: entities,

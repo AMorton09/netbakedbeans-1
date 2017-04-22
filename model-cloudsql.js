@@ -68,7 +68,7 @@ function registerUser(registerFormData, callback) {
         //sends error to app.js to display 500 error
         if (error) {
           callback(error);
-        
+
           return;
         }
         console.log('it worked!');
@@ -77,8 +77,8 @@ function registerUser(registerFormData, callback) {
         read(response.insertcustomer_id, callback);
       }
     );
- 
-  
+
+
   gcloudSqlConnection.end();
 }
 // [END create]
@@ -165,19 +165,40 @@ function addToCart(rentalFormDataSQL, callback) {
         //sends error to app.js to display 500 error
         if (error) {
           callback(error);
-        
+
           return;
         }
         console.log('it worked!');
         console.log(response);
-        //from gcloud it is the customer id that is assigned by the server
-       
+
       }
     );
- 
-  
+
   gcloudSqlConnection.end();
 }
+
+function removeFromCart(cartData, callback) {
+  const gcloudSqlConnection = getConnectionGCloudSql();
+
+    gcloudSqlConnection.query(
+      'DELETE FROM `cartItems` WHERE `cart_id` = ?',
+      //cart_id created as auto incrementing id for each cart item to make removal easier
+      cartData,
+      (error, response) => {
+        //sends error to app.js to display 500 error
+        if (error) {
+          callback(error);
+
+          return;
+        }
+        console.log('it worked!');
+        console.log(response);
+
+              }
+            );
+
+          gcloudSqlConnection.end();
+        }
 
 module.exports = {
   list: list,
@@ -187,4 +208,6 @@ module.exports = {
   delete: _delete,
   read: read,
   addToCart: addToCart,
+  getCart: getCart,
+  removeFromCart: removeFromCart,
 };
