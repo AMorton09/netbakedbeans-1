@@ -47,6 +47,10 @@ app.get("/customer", function(req, res) {
   res.render("customer");
 });
 
+app.get("/checkout", function(req, res) {
+  res.render("checkout");
+});
+
 app.get("/login", function(req, res) {
 
   res.render("login");
