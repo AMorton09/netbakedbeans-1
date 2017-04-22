@@ -61,7 +61,9 @@ app.post("/loginAuth", (req, res, next) => {
   else{
 
     console.log(savedData);
-    res.cookie(savedData, { expire: new Date() + 9999 })
+   
+    res.cookie("userinfo",savedData, { expire: new Date() + 9999 })
+    console.log(res.cookie);
 
     res.render('customer');
   }
@@ -147,8 +149,10 @@ app.post("/register", (req, res, next) => {
 
 
 app.post("/rent", (req, res, next) => {
-  
-      res.redirect(`cart`);
+      var rentalData = req.body;
+      console.log(rentalData);
+      console.log(req.body);
+      res.redirect(`movies`);
   
 });
 
@@ -174,7 +178,7 @@ app.get('/movies', (req, res, next) => {
       next(err);
       return;
     }
-    console.log(entities);
+   
 
     res.render('movies', {
       movies: entities,
