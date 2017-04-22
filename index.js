@@ -150,10 +150,12 @@ app.post("/register", (req, res, next) => {
 
 app.post("/rent", (req, res, next) => {
       var rentalData = req.body;
-      console.log(rentalData);
-      console.log(req.body);
-      res.redirect(`movies`);
-  
+      var rentalDataSQL = {film_id:rentalData.film_id, title:rentalData.title, description:rentalData.description, rental_rate:rentalData.rental_rate};
+      console.log(rentalDataSQL);
+      getModel().addToCart(rentalDataSQL,(error, savedData) =>{
+      
+      res.redirect(`cart`);
+  });
 });
 
 app.post("/addemployee", (req, res, next) => {

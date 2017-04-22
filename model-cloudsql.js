@@ -135,6 +135,30 @@ function _delete(customer_id, callback) {
   connection.end();
 }
 
+function addToCart(rentalFormData, callback) {
+  const gcloudSqlConnection = getConnectionGCloudSql();
+
+    gcloudSqlConnection.query(
+      'INSERT INTO `cartItems` SET ?',
+      rentalFormData,
+      (error, response) => {
+        //sends error to app.js to display 500 error
+        if (error) {
+          callback(error);
+        
+          return;
+        }
+        console.log('it worked!');
+        console.log(response);
+        //from gcloud it is the customer id that is assigned by the server
+       
+      }
+    );
+ 
+  
+  gcloudSqlConnection.end();
+}
+
 module.exports = {
   list: list,
   registerUser: registerUser,
@@ -142,4 +166,5 @@ module.exports = {
   update: update,
   delete: _delete,
   read: read,
+  addToCart: addToCart,
 };
