@@ -17,6 +17,26 @@ function getConnectionGCloudSql() {
   return mysql.createConnection(options);
 }
 
+function getCart(limit, token, callback) {
+  token = token ? parseInt(token, 10) : 0;
+  const connection = getConnectionGCloudSql();
+  connection.query(
+    'SELECT * FROM `cartItems` LIMIT ? OFFSET ?',
+    [limit, token],
+    (error, results) => {
+      if (error) {
+        callback(error);
+        return;
+      }
+      const hasMore = results.length === limit ? token + results.length : false;
+      callback(null, results, hasMore);
+    }
+  );
+  connection.end();
+}
+
+
+
 // [START list]
 function list(limit, token, callback) {
   token = token ? parseInt(token, 10) : 0;
@@ -135,12 +155,12 @@ function _delete(customer_id, callback) {
   connection.end();
 }
 
-function addToCart(rentalFormData, callback) {
+function addToCart(rentalFormDataSQL, callback) {
   const gcloudSqlConnection = getConnectionGCloudSql();
 
     gcloudSqlConnection.query(
       'INSERT INTO `cartItems` SET ?',
-      rentalFormData,
+      rentalFormDataSQL,
       (error, response) => {
         //sends error to app.js to display 500 error
         if (error) {

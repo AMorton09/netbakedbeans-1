@@ -153,8 +153,6 @@ app.post("/rent", (req, res, next) => {
       var rentalDataSQL = {film_id:rentalData.film_id, title:rentalData.title, description:rentalData.description, rental_rate:rentalData.rental_rate};
       console.log(rentalDataSQL);
       getModel().addToCart(rentalDataSQL,(error, savedData) =>{
-      
-      
   });
       res.redirect(`cart`);
 });
@@ -191,7 +189,21 @@ app.get('/movies', (req, res, next) => {
   });
 });
 
+app.get('/cart', (req, res, next) => {
+  getModel().getCart(10000, req.query.pageToken, (err, entities, cursor) => {
+    if (err) {
+      next(err);
+      return;
+    }
+   
 
+    res.render('cart', {
+      movies: entities,
+
+      nextPageToken: cursor
+    });
+  });
+});
 
 app.post("/file-upload/:year/:month", function(req, res) {
   // Parse a file that was uploaded
