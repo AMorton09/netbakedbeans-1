@@ -35,6 +35,24 @@ function getCart(limit, token, callback) {
   connection.end();
 }
 
+function listUsers(limit, token, callback) {
+  token = token ? parseInt(token, 10) : 0;
+  const connection = getConnectionGCloudSql();
+  connection.query(
+    'SELECT * FROM `users` LIMIT ? OFFSET ?',
+    [limit, token],
+    (error, results) => {
+      if (error) {
+        callback(error);
+        return;
+      }
+      const hasMore = results.length === limit ? token + results.length : false;
+      callback(null, results, hasMore);
+    }
+  );
+  connection.end();
+}
+
 
 
 // [START list]
@@ -149,7 +167,7 @@ function update(customer_id, data, callback) {
 function _delete(customer_id, callback) {
   const connection = getConnectionGCloudSql();
   connection.query(
-    'DELETE FROM `users` WHERE `customer_id` = ?',
+    'DELETE FROM `users` WHERE `customer_id` ='+customer_id.customer_id+';',
     customer_id,
     callback
   );
@@ -211,4 +229,5 @@ module.exports = {
   addToCart: addToCart,
   getCart: getCart,
   removeFromCart: removeFromCart,
+  listUsers: listUsers,
 };

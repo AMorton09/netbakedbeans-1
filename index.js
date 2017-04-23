@@ -43,6 +43,18 @@ app.post("/removefromcart", (req, res, next) => {
       res.redirect(`cart`);
 });
 
+app.post("/removeuser", (req, res, next) => {
+      var customerID = req.body;
+      console.log(customerID);
+      getModel().delete(customerID,(error, savedData) =>{
+
+  });
+      console.log("i ran here");
+      res.redirect(`allusers`);
+});
+
+
+
 app.get("/customer", function(req, res) {
   res.render("customer");
 });
@@ -188,6 +200,24 @@ app.post("/addemployee", (req, res, next) => {
       res.redirect(`login`);
   });
 });
+
+
+app.get('/allusers', (req, res, next) => {
+  getModel().listUsers(10000, req.query.pageToken, (err, entities, cursor) => {
+    if (err) {
+      next(err);
+      return;
+    }
+
+
+    res.render('allusers', {
+      users: entities,
+
+      nextPageToken: cursor
+    });
+  });
+});
+
 
 
 app.get('/movies', (req, res, next) => {
