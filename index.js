@@ -57,6 +57,9 @@ app.get("/login", function(req, res) {
 });
 
 
+
+
+
 app.post("/loginAuth", (req, res, next) => {
  var loginFormData = req.body;
 
@@ -74,8 +77,12 @@ app.post("/loginAuth", (req, res, next) => {
 
     res.cookie("userinfo",savedData, { expire: new Date() + 9999 })
     console.log(res.cookie);
-
+    if (savedData.admin == 0){
     res.render('customer');
+  }
+  else{
+    res.render('admin');
+  }
   }
   });
 });
