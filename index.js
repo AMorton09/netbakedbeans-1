@@ -63,7 +63,7 @@ app.get("/login", function(req, res) {
 app.post("/loginAuth", (req, res, next) => {
  var loginFormData = req.body;
 
-  getModel().loginAuth(loginFormData, (error, savedData) => {
+  getModel().loginAuth(loginFormData, (error, results) => {
 
       if(error){
       console.log("search DATA:====");
@@ -72,15 +72,16 @@ app.post("/loginAuth", (req, res, next) => {
 
   }
   else{
+    
+    
 
-    console.log(savedData);
-
-    res.cookie("userinfo",savedData, { expire: new Date() + 9999 })
-    console.log(res.cookie);
-    if (savedData.admin == 0){
+    res.cookie("userinfo",results, { expire: new Date() + 9999 })
+    
+    if (results.admin == 0){
+      console.log("i ran so far away");
     res.render('customer');
   }
-  else{
+  else if (results.admin == 1){
     res.render('admin');
   }
   }
@@ -117,7 +118,7 @@ app.get("/about", function(req, res) {
   res.render("about");
 });
 app.get("/logout", function(req, res) {
-  res.render("logout");
+  res.render("login");
 });
 
 app.get("/contact", function(req, res) {

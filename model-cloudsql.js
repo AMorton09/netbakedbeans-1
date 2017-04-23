@@ -91,6 +91,7 @@ function loginAuth(loginFormData, callback) {
     'SELECT * FROM `users` WHERE `email` = ? and password = ?',
     [email , password],
     (error, results) => {
+  
       if (error) {
         callback(error);
         return;
@@ -101,7 +102,7 @@ function loginAuth(loginFormData, callback) {
         });
         return;
       }
-      callback(null, results);
+      callback(null, results[0]);
     }
   );
   connection.end();
