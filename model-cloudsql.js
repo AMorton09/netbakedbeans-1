@@ -101,6 +101,32 @@ function registerUser(registerFormData, callback) {
 }
 // [END create]
 
+
+function addMovie(registerFormData, callback) {
+  const gcloudSqlConnection = getConnectionGCloudSql();
+
+    gcloudSqlConnection.query(
+      'INSERT INTO `film` SET ?',
+      registerFormData,
+      (error, response) => {
+        //sends error to app.js to display 500 error
+        if (error) {
+          callback(error);
+
+          return;
+        }
+        console.log('it worked!');
+        console.log(response);
+        //from gcloud it is the customer id that is assigned by the server
+        read(response.insertcustomer_id, callback);
+      }
+    );
+
+
+  gcloudSqlConnection.end();
+}
+
+
 function loginAuth(loginFormData, callback) {
   const connection = getConnectionGCloudSql();
   var email = loginFormData.email;
@@ -230,4 +256,5 @@ module.exports = {
   getCart: getCart,
   removeFromCart: removeFromCart,
   listUsers: listUsers,
+  addMovie: addMovie,
 };

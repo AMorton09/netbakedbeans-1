@@ -202,6 +202,22 @@ app.post("/addemployee", (req, res, next) => {
 });
 
 
+app.post("/addmovie", (req, res, next) => {
+  var registerFormData = req.body;
+  //registerFormData.push({admin: 0});
+  console.log(registerFormData);
+
+  // Save the data to the database.
+  getModel().addMovie(registerFormData, (error, savedData) => {
+
+
+      console.log("SAVED DATA:====");
+      console.log(savedData);
+      res.redirect(`login`);
+  });
+});
+
+
 app.get('/allusers', (req, res, next) => {
   getModel().listUsers(10000, req.query.pageToken, (err, entities, cursor) => {
     if (err) {
