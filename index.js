@@ -55,18 +55,22 @@ app.post("/removeuser", (req, res, next) => {
 
 app.post("/search", (req, res, next) => {
       var searchTerm = req.body;
+      console.log(searchTerm);
       getModel().search(searchTerm, (err, entities, cursor) => {
     if (err) {
+      console.log(err);
       next(err);
       return;
     }
 
-
+    console.log(entities);
     res.render('movies', {
-      movies: entities
+      movies: entities,
+
 
       
     });
+
   });
 });
 
