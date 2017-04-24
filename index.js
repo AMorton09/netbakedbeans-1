@@ -53,7 +53,22 @@ app.post("/removeuser", (req, res, next) => {
       res.redirect(`allusers`);
 });
 
+app.post("/search", (req, res, next) => {
+      var searchTerm = req.body;
+      getModel().search(searchTerm, (err, entities, cursor) => {
+    if (err) {
+      next(err);
+      return;
+    }
 
+
+    res.render('movies', {
+      movies: entities
+
+      
+    });
+  });
+});
 
 app.get("/customer", function(req, res) {
   res.render("customer");

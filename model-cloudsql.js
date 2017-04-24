@@ -75,6 +75,27 @@ function list(limit, token, callback) {
 }
 // [END list]
 
+
+function search(searchTerm, callback) {
+  
+  const connection = getConnectionGCloudSql();
+  connection.query(
+    'SELECT * FROM `film` WHERE `title` LIKE `%'+searchTerm+'%`',
+    searchTerm.search,
+    (error, results) => {
+      if (error) {
+        callback(error);
+        return;
+      }
+      
+      callback(results);
+    }
+  );
+  connection.end();
+}
+
+
+
 // [START create]
 function registerUser(registerFormData, callback) {
   const gcloudSqlConnection = getConnectionGCloudSql();
@@ -132,7 +153,7 @@ function loginAuth(loginFormData, callback) {
   var email = loginFormData.email;
   var password = loginFormData.password;
   connection.query(
-    'SELECT * FROM `users` WHERE `email` = ? and password = ?',
+    'SELECT * FROM `users` WHERE `email` = ? and `password` = ?',
     [email , password],
     (error, results) => {
   
@@ -257,4 +278,5 @@ module.exports = {
   removeFromCart: removeFromCart,
   listUsers: listUsers,
   addMovie: addMovie,
+  search: search,
 };
