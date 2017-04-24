@@ -102,12 +102,12 @@ function registerUser(registerFormData, callback) {
 // [END create]
 
 
-function addMovie(registerFormData, callback) {
+function addMovie(movieData, callback) {
   const gcloudSqlConnection = getConnectionGCloudSql();
 
     gcloudSqlConnection.query(
       'INSERT INTO `film` SET ?',
-      registerFormData,
+      movieData,
       (error, response) => {
         //sends error to app.js to display 500 error
         if (error) {
