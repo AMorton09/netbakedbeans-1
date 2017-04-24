@@ -1,0 +1,14 @@
+checkout page with total cost
+cart page setup for multiple user accounts 
+use of cookies for auth across pages also to carry the data to the checkout
+admin reports
+add movies
+edit movies
+search bar and search by category (maybe radio button with a var to determine with search method to use in the model)
+CSS across project make it look nice
+trim movies page down from all movies into 25 or so at a time
+PANIC!!
+MAYBES
+edit user account maybe
+allow for changing of credit card on checkout
+setup admin navbar and make changes to cutomer nav bar
