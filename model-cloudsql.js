@@ -80,8 +80,8 @@ function search(searchTerm, callback) {
   
   const connection = getConnectionGCloudSql();
   connection.query(
-    'SELECT * FROM `film` WHERE `title` LIKE `%'+searchTerm+'%`',
-    searchTerm.search,
+    'SELECT * FROM `film` WHERE `title` LIKE `%'+searchTerm.search+'%`',
+    searchTerm,
     (error, results) => {
       if (error) {
         callback(error);
