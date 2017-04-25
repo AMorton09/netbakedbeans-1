@@ -43,6 +43,16 @@ app.post("/removefromcart", (req, res, next) => {
       res.redirect(`cart`);
 });
 
+app.post("/removemovie", (req, res, next) => {
+      var film_id = req.body;
+      console.log(film_id);
+      getModel().delete(film_id,(error, savedData) =>{
+
+  });
+      console.log("i ran here");
+      res.redirect(`admin-movies`);
+});
+
 app.post("/removeuser", (req, res, next) => {
       var customerID = req.body;
       console.log(customerID);
@@ -55,7 +65,7 @@ app.post("/removeuser", (req, res, next) => {
 
 app.post("/search", (req, res, next) => {
       var searchTerm = req.body;
-      
+
       console.log(searchTerm);
       getModel().search(searchTerm, (err, results) => {
     if (err) {
@@ -65,13 +75,16 @@ app.post("/search", (req, res, next) => {
     }
 
     console.log(results);
-     res.render("movies", {movies: results}); 
+     res.render("movies", {movies: results});
 
   });
-    
+
 });
 
 
+app.get("/admin-movies", function(req, res) {
+  res.render("admin-movies");
+});
 
 app.get("/addmovie", function(req, res) {
   res.render("addmovie");
@@ -107,11 +120,11 @@ app.post("/loginAuth", (req, res, next) => {
 
   }
   else{
-    
-    
+
+
 
     res.cookie("userinfo",results, { expire: new Date() + 9999 })
-    
+
     if (results.admin == 0){
       console.log("i ran so far away");
     res.render('customer');
@@ -139,7 +152,6 @@ app.use(function(req, res, next) {
   console.log("Looking for URL : " + req.url);
   next();
 });
-
 
 
 app.use(function(err, req, res, next) {
@@ -213,7 +225,7 @@ app.post("/addemployee", (req, res, next) => {
   var registerFormData = req.body;
 
   //
- 
+
   console.log(registerFormData);
 
   // Save the data to the database.
@@ -237,8 +249,8 @@ app.post("/addmovie", (req, res, next) => {
   getModel().addMovie(registerFormData, (error, savedData) => {
 
 
-      
-      
+
+
   });
   res.redirect(`login`);
 });
@@ -272,6 +284,21 @@ app.get('/movies', (req, res, next) => {
 
 
     res.render('movies', {
+      movies: entities,
+
+      nextPageToken: cursor
+    });
+  });
+});
+app.get('/admin-movies', (req, res, next) => {
+  getModel().list(10000, req.query.pageToken, (err, entities, cursor) => {
+    if (err) {
+      next(err);
+      return;
+    }
+
+
+    res.render('admin-movies', {
       movies: entities,
 
       nextPageToken: cursor
@@ -416,7 +443,7 @@ app.get("/writefile", function(req, res, next) {
 app.use(function(req, res) {
   // Define the content type
   res.type("text/html");
-  
+
   // The default status is 200
   res.status(404);
 

@@ -212,11 +212,20 @@ function update(customer_id, data, callback) {
 }
 // [END update]
 
-function _delete(customer_id, callback) {
+function _deleteUser(customer_id, callback) {
   const connection = getConnectionGCloudSql();
   connection.query(
     'DELETE FROM `users` WHERE `customer_id` ='+customer_id.customer_id+';',
     customer_id,
+    callback
+  );
+  connection.end();
+}
+function _deleteMovie(film_id, callback) {
+  const connection = getConnectionGCloudSql();
+  connection.query(
+    'DELETE FROM `film` WHERE `film_id` ='+film_id.film_id+';',
+    film_id,
     callback
   );
   connection.end();
@@ -279,5 +288,7 @@ module.exports = {
   removeFromCart: removeFromCart,
   listUsers: listUsers,
   addMovie: addMovie,
+  deleteMovie: _deleteMovie
+
   search: search,
 };
