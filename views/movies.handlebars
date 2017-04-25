@@ -2,9 +2,9 @@
   {{>bsnavbar2}}
 <h3>About Us</h3>
 <br><br>
-<form method="post" action="/search">
+<form name="form-search" method="post" action="/search">
   Search: <input name="search"  value=""/>
-  <button type="submit"class="btn btn-default"> Search </button>
+  <button id="search-movies" type="submit"class="btn btn-default"> Search </button>
 </form>
 {{#each movies}}
 <table bgcolor="grey" cellpadding="10">

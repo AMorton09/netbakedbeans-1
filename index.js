@@ -55,24 +55,28 @@ app.post("/removeuser", (req, res, next) => {
 
 app.post("/search", (req, res, next) => {
       var searchTerm = req.body;
+      
       console.log(searchTerm);
-      getModel().search(searchTerm, (err, entities, cursor) => {
+      getModel().search(searchTerm, (err, results) => {
     if (err) {
       console.log(err);
       next(err);
       return;
     }
 
-    console.log(entities);
-    res.render('movies', {
-      movies: entities,
-
-
-      
-    });
+    console.log(results);
+     res.render("movies", {movies: results}); 
 
   });
+    
 });
+
+
+
+app.get("/addmovie", function(req, res) {
+  res.render("addmovie");
+});
+
 
 app.get("/customer", function(req, res) {
   res.render("customer");
@@ -215,6 +219,7 @@ app.post("/addemployee", (req, res, next) => {
 
 
       console.log("SAVED DATA:====");
+
       console.log(savedData);
       res.redirect(`login`);
   });
@@ -231,6 +236,7 @@ app.post("/addmovie", (req, res, next) => {
 
 
       console.log("SAVED DATA:====");
+      console.log(error);
       console.log(savedData);
       res.redirect(`login`);
   });
@@ -408,7 +414,7 @@ app.get("/writefile", function(req, res, next) {
 app.use(function(req, res) {
   // Define the content type
   res.type("text/html");
-
+  
   // The default status is 200
   res.status(404);
 

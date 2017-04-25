@@ -81,14 +81,15 @@ function search(searchTerm, callback) {
   const connection = getConnectionGCloudSql();
   connection.query(
     'SELECT * FROM `film` WHERE `title` LIKE "%'+searchTerm.search+'%";',
-    searchTerm,
+   
     (error, results) => {
       if (error) {
+
         callback(error);
         return;
       }
       
-      callback(results);
+      callback(null, results);
     }
   );
   connection.end();
@@ -127,17 +128,17 @@ function addMovie(movieData, callback) {
   const gcloudSqlConnection = getConnectionGCloudSql();
 
     gcloudSqlConnection.query(
-      'INSERT INTO `film` SET ?',
+      'INSERT INTO `film` VALUES ',
       movieData,
       (error, response) => {
         //sends error to app.js to display 500 error
         if (error) {
-          callback(error);
+          callback(error, null);
 
           return;
         }
         console.log('it worked!');
-        console.log(response);
+        console.log(null,response);
         //from gcloud it is the customer id that is assigned by the server
         read(response.insertcustomer_id, callback);
       }
