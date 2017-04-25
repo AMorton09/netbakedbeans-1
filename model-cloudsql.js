@@ -77,18 +77,18 @@ function list(limit, token, callback) {
 
 
 function search(searchTerm, callback) {
-  
+
   const connection = getConnectionGCloudSql();
   connection.query(
     'SELECT * FROM `film` WHERE `title` LIKE "%'+searchTerm.search+'%";',
-   
+
     (error, results) => {
       if (error) {
 
         callback(error);
         return;
       }
-      
+
       callback(null, results);
     }
   );
@@ -121,28 +121,28 @@ function registerUser(registerFormData, callback) {
 
   gcloudSqlConnection.end();
 }
-// [END create]
 
 
 function addMovie(movieData, callback) {
   const gcloudSqlConnection = getConnectionGCloudSql();
 
     gcloudSqlConnection.query(
-      'INSERT INTO `film` VALUES ',
-      movieData,
-      (error, response) => {
+      'INSERT INTO `film` (title, description, release_year, language_id, original_language_id, rental_duration, rental_rate, length, replacement_cost, rating, special_features, last_update ) VALUES =("'+movieData.title+'","'+movieData.description+'","'+movieData.release_year+'",'+1+','+1+','+3+','+movieData.rental_rate+','+movieData.length+','+29.95+','+movieData.rating+', Trailers)',
+
+(error, response) => {
         //sends error to app.js to display 500 error
         if (error) {
-          callback(error, null);
+          callback(error);
 
           return;
         }
         console.log('it worked!');
-        console.log(null,response);
+        console.log(response);
         //from gcloud it is the customer id that is assigned by the server
-        read(response.insertcustomer_id, callback);
-      }
-    );
+
+
+}
+);
 
 
   gcloudSqlConnection.end();
@@ -157,7 +157,7 @@ function loginAuth(loginFormData, callback) {
     'SELECT * FROM `users` WHERE `email` = ? and `password` = ?',
     [email , password],
     (error, results) => {
-  
+
       if (error) {
         callback(error);
         return;
@@ -246,10 +246,10 @@ function addToCart(rentalFormDataSQL, callback) {
 
 function removeFromCart(cartID, callback) {
   const gcloudSqlConnection = getConnectionGCloudSql();
-    
+
     gcloudSqlConnection.query(
       'DELETE FROM `cartItems` WHERE `cart_id` = '+cartID.cart_id+';',
-      
+
       (error, response) => {
         //sends error to app.js to display 500 error
         if (error) {
@@ -263,8 +263,8 @@ function removeFromCart(cartID, callback) {
         gcloudSqlConnection.end();
               }
             );
-          
-          
+
+
         }
 
 module.exports = {
