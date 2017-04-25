@@ -211,7 +211,9 @@ app.post("/rent", (req, res, next) => {
 
 app.post("/addemployee", (req, res, next) => {
   var registerFormData = req.body;
-  //registerFormData.push({admin: 0});
+
+  //
+ 
   console.log(registerFormData);
 
   // Save the data to the database.
@@ -243,6 +245,7 @@ app.post("/addmovie", (req, res, next) => {
 
 
 app.get('/allusers', (req, res, next) => {
+  //if cookie.admin ==1 then allow this to run else display unauthorized to view this page
   getModel().listUsers(10000, req.query.pageToken, (err, entities, cursor) => {
     if (err) {
       next(err);

@@ -3,7 +3,10 @@
 <h3>About Us</h3>
 <br><br>
 <form name="form-search" method="post" action="/search">
-  Search: <input name="search"  value=""/>
+  Search: <input name="search"  value=""/><br>
+    <input type="radio" name="category" value="title"> Title<br>
+  <input type="radio" name="category" value="description"> Description<br>
+ 
   <button id="search-movies" type="submit"class="btn btn-default"> Search </button>
 </form>
 {{#each movies}}
