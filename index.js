@@ -235,11 +235,10 @@ app.post("/addmovie", (req, res, next) => {
   getModel().addMovie(registerFormData, (error, savedData) => {
 
 
-      console.log("SAVED DATA:====");
-      console.log(error);
-      console.log(savedData);
-      res.redirect(`login`);
+      
+      
   });
+  res.redirect(`login`);
 });
 
 

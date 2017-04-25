@@ -127,7 +127,7 @@ function addMovie(movieData, callback) {
   const gcloudSqlConnection = getConnectionGCloudSql();
 
     gcloudSqlConnection.query(
-      'INSERT INTO `film` (title, description, release_year, language_id, original_language_id, rental_duration, rental_rate, length, replacement_cost, rating, special_features, last_update ) VALUES =("'+movieData.title+'","'+movieData.description+'","'+movieData.release_year+'",'+1+','+1+','+3+','+movieData.rental_rate+','+movieData.length+','+29.95+','+movieData.rating+', Trailers)',
+      'INSERT INTO `film` (title, description, release_year, language_id, original_language_id, rental_duration, rental_rate, length, replacement_cost, rating, special_features ) VALUES ("'+movieData.title+'","'+movieData.description+'","'+movieData.release_year+'",'+1+','+1+','+3+','+movieData.rental_rate+','+movieData.length+','+29.95+',"'+movieData.rating+'", "Trailers")',
 
 (error, response) => {
         //sends error to app.js to display 500 error
