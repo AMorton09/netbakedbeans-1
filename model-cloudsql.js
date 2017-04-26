@@ -232,17 +232,17 @@ function read (id, cb) {
 }
 
 // [START update]
-function update(customer_id, data, callback) {
+function updateUser(userData, callback) {
   const connection = getConnectionGCloudSql();
   connection.query(
     'UPDATE `users` SET ? WHERE `customer_id` = ?',
-    [data, customer_id],
-    error => {
+    [userData, userData.customer_id],
+    (error, results) => {
       if (error) {
         callback(error);
         return;
       }
-      read(customer_id, callback);
+      callback
     }
   );
   connection.end();
@@ -331,7 +331,7 @@ module.exports = {
   list: list,
   registerUser: registerUser,
   loginAuth: loginAuth,
-  update: update,
+ 
   getMovie: getMovie,
   read: read,
   addToCart: addToCart,
@@ -343,4 +343,5 @@ module.exports = {
   updateMovie: updateMovie,
   deleteUser: deleteUser, 
   search: search,
+  updateUser: updateUser,
 };

@@ -1,7 +1,12 @@
 <div class="page-header">
-  {{>bsnavbar2}}
+  {{>navbaradmin}}
+<style>
+    * {
+ color: white;
+}
+</style>
 <h3>EDIT USERS</h3>
-<form class="form-horizontal"  method = "post" action ="/edituser">
+<form class="form-horizontal"  method = "post" action ="/updateuser">
 
 <div class="form-group">
 
@@ -32,7 +37,19 @@
     <label class="control-label" for="password">Password:</label>
     <input name="password" required="true" class="form-control" type="password" id="password" value=""/>
 </div>
+<div class="form-group">
 
+    <label class="control-label" for="ccnum">Credit Card Number:</label>
+    <input name="ccnum" required="true" class="form-control" id="ccnum" value=""/>
+</div>
+<div class="form-group">
+    <label class="control-label" for="expdate">Expiration Date:</label>
+    <input name="expdate" required="true" class="form-control" id="expdate" value=""/>
+</div>
+<div class="form-group">
+    <label class="control-label" for="ccv">CCV Number:</label>
+    <input name="ccv" required="true" class="form-control" id="ccv" value=""/>
+</div>
 <input name="admin" type="hidden" value="0"/>
 
 <button type="submit" class="btn btn-default"> Update Information </button>

@@ -73,6 +73,23 @@ app.post("/rent", (req, res, next) => {
       res.redirect(`cart`);
 });
 
+app.post("/updateuser", (req, res, next) => {
+      var userEdit = req.body;
+      
+      console.log(userEdit);
+      getModel().updateUser(userEdit,(error, results) =>{
+      if (error) {
+       console.log(error);
+       next(error);
+      return;}
+      console.log(results);
+      
+
+
+  });
+      res.redirect(`admin-movies`);
+});
+
 app.post("/updatemovie", (req, res, next) => {
       var movieEdit = req.body;
       
