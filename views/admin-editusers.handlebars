@@ -1,0 +1,42 @@
+<div class="page-header">
+  {{>bsnavbar2}}
+<h3>EDIT USERS</h3>
+<form class="form-horizontal"  method = "post" action ="/edituser">
+
+<div class="form-group">
+
+    <label class="control-label" for="firstname">First Name:</label>
+    <input name="fname" required="true" class="form-control" id="fname" value=""/>
+</div>
+
+<div class="form-group">
+
+    <label class="control-label" for="lastname">Last Name:</label>
+    <input name="lname" required="true" class="form-control" id="lname" value=""/>
+</div>
+
+<div class="form-group">
+
+    <label class="control-label" for="address">Address:</label>
+    <input name="addr" required="true" class="form-control" id="addr" value=""/>
+</div>
+
+<div class="form-group">
+
+    <label class="control-label" for="email">Email:</label>
+    <input name="email" required="true" class="form-control" type="email" id="email" value=""/>
+</div>
+
+<div class="form-group">
+
+    <label class="control-label" for="password">Password:</label>
+    <input name="password" required="true" class="form-control" type="password" id="password" value=""/>
+</div>
+
+<input name="admin" type="hidden" value="0"/>
+
+<button type="submit" class="btn btn-default"> Update Information </button>
+</form>
+
+
+</div>
