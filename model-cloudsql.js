@@ -95,7 +95,24 @@ function search(searchTerm, callback) {
   connection.end();
 }
 
+function getMovie(film_id, callback) {
 
+  const connection = getConnectionGCloudSql();
+  connection.query(
+    'SELECT * FROM `film` WHERE `film_id` = ?',
+    film_id.film_id,
+    (error, results) => {
+      if (error) {
+
+        callback(error);
+        return;
+      }
+
+      callback(null, results);
+    }
+  );
+  connection.end();
+}
 
 // [START create]
 function registerUser(registerFormData, callback) {
@@ -295,7 +312,7 @@ module.exports = {
   registerUser: registerUser,
   loginAuth: loginAuth,
   update: update,
- 
+  getMovie: getMovie,
   read: read,
   addToCart: addToCart,
   getCart: getCart,
