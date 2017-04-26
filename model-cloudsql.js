@@ -114,6 +114,25 @@ function getMovie(film_id, callback) {
   connection.end();
 }
 
+function updateMovie(movieEdit, callback) {
+
+  const connection = getConnectionGCloudSql();
+  connection.query(
+    'SELECT * FROM `film` WHERE `film_id` = ?',
+    movieEdit,
+    (error, results) => {
+      if (error) {
+
+        callback(error);
+        return;
+      }
+
+      callback(null, results);
+    }
+  );
+  connection.end();
+}
+
 // [START create]
 function registerUser(registerFormData, callback) {
   const gcloudSqlConnection = getConnectionGCloudSql();

@@ -73,6 +73,23 @@ app.post("/rent", (req, res, next) => {
       res.redirect(`cart`);
 });
 
+app.post("/updatemovie", (req, res, next) => {
+      var movieEdit = req.body;
+      
+      console.log(movieEdit);
+      getModel().getMovie(movieEdit,(error, results) =>{
+      if (error) {
+       console.log(error);
+        next(error);
+      return;}
+      console.log(results);
+      res.render("admin-movies");
+
+
+  });
+      
+});
+
 app.post("/getmovie", (req, res, next) => {
       var filmID = req.body;
       
