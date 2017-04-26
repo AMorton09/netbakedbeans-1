@@ -3,18 +3,18 @@
 <h3>Edit Selected Movie</h3>
 
 {{#each movie}}
-<form class="form-horizontal"  method = "post" action="/editmovie">
+<form class="form-horizontal"  method = "post" action="/updatemovie">
 <input name="film_id" type="hidden" value="{{this.film_id}}"/>
 <div class="form-group">
 
     <label class="control-label" for="title">Title:</label>
-    <input name="title" required="true" class="form-control" id="title" value={{this.title}} />
+    <input name="title" required="true" class="form-control" id="title" value="{{this.title}}"" />
 </div>
 
 <div class="form-group">
 
     <label class="control-label" for="description">Description:</label>
-    <input name="description" required="true" class="form-control" id="description" value={{this.description}} />
+    <input name="description" required="true" class="form-control" id="description" value="{{this.description}}" />
 </div>
 
 <div class="form-group">

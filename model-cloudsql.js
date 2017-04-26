@@ -116,12 +116,13 @@ function getMovie(film_id, callback) {
 
 function updateMovie(movieEdit, callback) {
 
-  const connection = getConnectionGCloudSql();
-  gcloudSqlConnection.query(
-        'UPDATE `film` SET title = ?, description = ?, release_year = ? WHERE film_id = 'this.film_id''
+  const gcloudSqlConnection = getConnectionGCloudSql();
   
+  gcloudSqlConnection.query(
+        'UPDATE `film` SET title = "'+movieEdit.title+'", description = "'+movieEdit.description+'", release_year = '+movieEdit.release_year+', rating = "'+movieEdit.rating+'" WHERE film_id = '+movieEdit.film_id+'',
+    movieEdit,
     (error, results) => {
-      if (error) {
+     if (error) {
 
         callback(error);
         return;
@@ -130,7 +131,7 @@ function updateMovie(movieEdit, callback) {
       callback(null, results);
     }
   );
-  connection.end();
+  gcloudSqlConnection.end();
 }
 
 // [START create]
@@ -339,6 +340,7 @@ module.exports = {
   listUsers: listUsers,
   addMovie: addMovie,
   deleteMovie: deleteMovie,
-
+  updateMovie: updateMovie,
+  deleteUser: deleteUser, 
   search: search,
 };

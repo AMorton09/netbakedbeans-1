@@ -77,17 +77,17 @@ app.post("/updatemovie", (req, res, next) => {
       var movieEdit = req.body;
       
       console.log(movieEdit);
-      getModel().getMovie(movieEdit,(error, results) =>{
+      getModel().updateMovie(movieEdit,(error, results) =>{
       if (error) {
        console.log(error);
-        next(error);
+       next(error);
       return;}
       console.log(results);
-      res.render("admin-movies");
+      
 
 
   });
-      
+      res.redirect(`admin-movies`);
 });
 
 app.post("/getmovie", (req, res, next) => {
@@ -99,7 +99,11 @@ app.post("/getmovie", (req, res, next) => {
        console.log(error);
         next(error);
       return;}
+      var movieObj = results;
       console.log(results);
+    
+
+
       res.render("admin-editmovies", {movie: results});
 
 
@@ -347,6 +351,8 @@ app.get('/movies', (req, res, next) => {
     });
   });
 });
+
+
 app.get('/admin-movies', (req, res, next) => {
   getModel().list(10000, req.query.pageToken, (err, entities, cursor) => {
     if (err) {
