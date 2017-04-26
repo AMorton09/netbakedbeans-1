@@ -117,9 +117,9 @@ function getMovie(film_id, callback) {
 function updateMovie(movieEdit, callback) {
 
   const connection = getConnectionGCloudSql();
-  connection.query(
-    'SELECT * FROM `film` WHERE `film_id` = ?',
-    movieEdit,
+  gcloudSqlConnection.query(
+        'UPDATE `film` SET title = ?, description = ?, release_year = ? WHERE film_id = 'this.film_id''
+  
     (error, results) => {
       if (error) {
 
