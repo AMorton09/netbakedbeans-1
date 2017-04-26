@@ -46,8 +46,8 @@ app.post("/removefromcart", (req, res, next) => {
 app.post("/removemovie", (req, res, next) => {
       var film_id = req.body;
       console.log(film_id);
-      getModel().delete(film_id,(error, savedData) =>{
-
+      getModel().deleteMovie(film_id,(error, results) =>{
+        console.log(results);
   });
       console.log("i ran here");
       res.redirect(`admin-movies`);
@@ -56,10 +56,11 @@ app.post("/removemovie", (req, res, next) => {
 app.post("/removeuser", (req, res, next) => {
       var customerID = req.body;
       console.log(customerID);
-      getModel().delete(customerID,(error, savedData) =>{
-
+      getModel().deleteUser(customerID,(error, results) =>{
+        console.log(results);
   });
       console.log("i ran here");
+
       res.redirect(`allusers`);
 });
 
@@ -82,9 +83,7 @@ app.post("/search", (req, res, next) => {
 });
 
 
-app.get("/admin-movies", function(req, res) {
-  res.render("admin-movies");
-});
+
 
 app.get("/addmovie", function(req, res) {
   res.render("addmovie");
