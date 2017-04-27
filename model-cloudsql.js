@@ -1,4 +1,4 @@
- 
+
 'use strict';
 
 const extend = require('lodash').assign;
@@ -139,7 +139,7 @@ function getUser(user_id, callback) {
 function updateMovie(movieEdit, callback) {
 
   const gcloudSqlConnection = getConnectionGCloudSql();
-  
+
   gcloudSqlConnection.query(
         'UPDATE `film` SET title = "'+movieEdit.title+'", description = "'+movieEdit.description+'", release_year = '+movieEdit.release_year+', rating = "'+movieEdit.rating+'" WHERE film_id = '+movieEdit.film_id+'',
     movieEdit,
@@ -258,11 +258,11 @@ function updateUser(userData, callback) {
   const connection = getConnectionGCloudSql();
   console.log("i ran so far");
   connection.query(
-    'UPDATE `users` SET ? WHERE `customer_id` = ?',
-    [userData, userData.customer_id],
+    'UPDATE `users` ? SET WHERE `customer_id` = '+userData.customer_id+';',
+    userData,
     (error, results) => {
       if (error) {
-        callback(error,null);
+        callback(error);
         return;
       }
       callback(null,results);
@@ -300,7 +300,7 @@ function deleteMovie(film_id, callback) {
       }
     callback(results);
   }
-    
+
   );
   connection.end();
 }
@@ -364,7 +364,7 @@ module.exports = {
   addMovie: addMovie,
   deleteMovie: deleteMovie,
   updateMovie: updateMovie,
-  deleteUser: deleteUser, 
+  deleteUser: deleteUser,
   search: search,
   updateUser: updateUser,
 };

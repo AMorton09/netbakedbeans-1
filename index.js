@@ -75,7 +75,7 @@ app.post("/rent", (req, res, next) => {
 
 app.post("/updateuser", (req, res, next) => {
       var userEdit = req.body;
-      
+
       console.log(userEdit);
       getModel().updateUser(userEdit,(error, results) =>{
       if (error) {
@@ -84,7 +84,7 @@ app.post("/updateuser", (req, res, next) => {
        next(error);
       return;}
       console.log(results);
-      
+
 
 
   });
@@ -93,7 +93,7 @@ app.post("/updateuser", (req, res, next) => {
 
 app.post("/updatemovie", (req, res, next) => {
       var movieEdit = req.body;
-      
+
       console.log(movieEdit);
       getModel().updateMovie(movieEdit,(error, results) =>{
       if (error) {
@@ -101,7 +101,7 @@ app.post("/updatemovie", (req, res, next) => {
        next(error);
       return;}
       console.log(results);
-      
+
 
 
   });
@@ -110,7 +110,7 @@ app.post("/updatemovie", (req, res, next) => {
 
 app.post("/getmovie", (req, res, next) => {
       var filmID = req.body;
-      
+
       console.log(filmID);
       getModel().getMovie(filmID,(error, results) =>{
       if (error) {
@@ -119,19 +119,19 @@ app.post("/getmovie", (req, res, next) => {
       return;}
       var movieObj = results;
       console.log(results);
-    
+
 
 
       res.render("admin-editmovies", {movie: results});
 
 
   });5
-      
+
 });
 
 app.post("/getuser", (req, res, next) => {
       var userID = req.body;
-      
+
       console.log(userID);
       getModel().getUser(userID,(error, results) =>{
       if (error) {
@@ -140,14 +140,14 @@ app.post("/getuser", (req, res, next) => {
       return;}
       var movieObj = results;
       console.log(results);
-    
+
 
 
       res.render("admin-editusers", {user: results});
 
 
   });
-      
+
 });
 
 
@@ -272,13 +272,37 @@ app.post("/loginAuth", (req, res, next) => {
     res.render('customer');
   }
   else if (results.admin == 1){
-    res.render('admin');
+    res.render('admin-home');
   }
   }
   });
 });
 
+app.post("/editlogin", (req, res, next) => {
+ var loginFormData = req.body;
 
+  getModel().loginAuth(loginFormData, (error, results) => {
+
+      if(error){
+      console.log("search DATA:====");
+      console.log(error);
+      res.render(`loginUnsuccessful`);
+
+  }
+  else{
+
+    res.cookie("userinfo",results, { expire: new Date() + 9999 })
+    var userObj = results;
+    console.log(results);
+
+
+
+    res.render('customer-editinfo', {user: results});
+
+  }
+
+  });
+});
 
 //_______________________
 //|                     |
@@ -316,7 +340,12 @@ app.get("/customer", function(req, res) {
 app.get("/checkout", function(req, res) {
   res.render("checkout");
 });
-
+app.get("/customer-editinfo", function(req, res) {
+  res.render("customer-editinfo");
+});
+app.get("/customer-editlogin", function(req, res) {
+  res.render("customer-editlogin");
+});
 app.get("/login", function(req, res) {
 
   res.render("login");

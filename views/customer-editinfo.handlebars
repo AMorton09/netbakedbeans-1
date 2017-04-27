@@ -1,0 +1,53 @@
+<div class="page-header">
+  {{>bsnavbar2}}
+<style>
+    * {
+ color: white;
+}
+</style>
+<h3>Edit Profile</h3>
+
+{{#each user}}
+<form class="form-horizontal"  method = "post" action ="/updateuser">
+
+<div class="form-group">
+
+    <label class="control-label" for="firstname">First Name:</label>
+    <input name="fname" required="true" class="form-control" id="fname" value="{{this.fname}}"/>
+</div>
+
+<div class="form-group">
+
+    <label class="control-label" for="lastname">Last Name:</label>
+    <input name="lname" required="true" class="form-control" id="lname" value="{{this.lname}}"/>
+</div>
+
+<div class="form-group">
+
+    <label class="control-label" for="address">Address:</label>
+    <input name="addr" required="true" class="form-control" id="addr" value="{{this.addr}}"/>
+</div>
+
+<div class="form-group">
+
+    <label class="control-label" for="email">Email:</label>
+    <input name="email" required="true" class="form-control" type="email" id="email" value="{{this.email}}"/>
+</div>
+
+<div class="form-group">
+
+    <label class="control-label" for="password">Password:</label>
+    <input name="password" required="true" class="form-control" type="password" id="password" value="{{this.password}}"/>
+</div>
+
+
+<input name="ccnum" type="hidden" value="{{this.ccnum}}"/>
+<input name="expdate" type="hidden" value="{{this.expdate}}"/>
+<input name="ccv" type="hidden" value="{{this.ccv}}"/>
+<input name="admin" type="hidden" value="0"/>
+
+<button type="submit" class="btn btn-default"> Update Information </button>
+</form>
+{{/each}}
+
+</div>
