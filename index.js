@@ -286,12 +286,12 @@ app.post("/editlogin", (req, res, next) => {
       if(error){
       console.log("search DATA:====");
       console.log(error);
-      res.render(`loginUnsuccessful`);
+      res.render(`customer-unsuccessfuleditlogin`);
 
   }
   else{
 
-    res.cookie("userinfo",results, { expire: new Date() + 9999 })
+    //res.cookie("userinfo",results, { expire: new Date() + 9999 })
     var userObj = results;
     console.log(results);
 
@@ -345,6 +345,9 @@ app.get("/customer-editinfo", function(req, res) {
 });
 app.get("/customer-editlogin", function(req, res) {
   res.render("customer-editlogin");
+});
+app.get("/customer-unsuccessfuleditlogin", function(req, res) {
+  res.render("customer-unsuccessfuleditlogin");
 });
 app.get("/login", function(req, res) {
 
