@@ -258,7 +258,11 @@ function updateUser(userData, callback) {
   const connection = getConnectionGCloudSql();
   console.log("i ran so far");
   connection.query(
+<<<<<<< HEAD
     'UPDATE `users` ? SET WHERE `customer_id` = '+userData.customer_id+';',
+=======
+    'UPDATE `users` SET fname ="'+userData.fname+'", lname = "'+userData.lname+'", addr = "'+userData.addr+'", email = "'+userData.email+'", password = "'+userData.password+'", ccnum = "'+userData.ccnum+'", expdate = "'+userData.expdate+'" WHERE `customer_id` = '+userData.customer_id+';',
+>>>>>>> 5f979aa14c13a6b358902172f6499c7894b21103
     userData,
     (error, results) => {
       if (error) {
