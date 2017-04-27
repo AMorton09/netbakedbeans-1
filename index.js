@@ -80,6 +80,7 @@ app.post("/updateuser", (req, res, next) => {
       getModel().updateUser(userEdit,(error, results) =>{
       if (error) {
        console.log(error);
+
        next(error);
       return;}
       console.log(results);
@@ -87,7 +88,7 @@ app.post("/updateuser", (req, res, next) => {
 
 
   });
-      res.redirect(`admin-movies`);
+      res.redirect(`allusers`);
 });
 
 app.post("/updatemovie", (req, res, next) => {
@@ -124,9 +125,31 @@ app.post("/getmovie", (req, res, next) => {
       res.render("admin-editmovies", {movie: results});
 
 
+  });5
+      
+});
+
+app.post("/getuser", (req, res, next) => {
+      var userID = req.body;
+      
+      console.log(userID);
+      getModel().getUser(userID,(error, results) =>{
+      if (error) {
+       console.log(error);
+        next(error);
+      return;}
+      var movieObj = results;
+      console.log(results);
+    
+
+
+      res.render("admin-editusers", {user: results});
+
+
   });
       
 });
+
 
 app.post("/addemployee", (req, res, next) => {
   var registerFormData = req.body;
@@ -275,9 +298,7 @@ app.get("/admin-editmovies", function(req, res) {
   res.render("admin-editmovies");
 });
 
-app.get("/admin-editusers", function(req, res) {
-  res.render("admin-editusers");
-});
+
 
 app.get("/admin-home", function(req, res) {
   res.render("admin-home");
