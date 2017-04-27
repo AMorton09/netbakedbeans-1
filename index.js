@@ -86,9 +86,9 @@ app.post("/updateuser", (req, res, next) => {
       console.log(results);
       
 
-
-  });
       res.redirect(`allusers`);
+  });
+      
 });
 
 app.post("/updatemovie", (req, res, next) => {

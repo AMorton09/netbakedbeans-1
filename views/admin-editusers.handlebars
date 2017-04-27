@@ -9,7 +9,7 @@
 
 {{#each user}}
 <form class="form-horizontal"  method = "post" action ="/updateuser">
-
+<input name="customer_id" type="hidden" value="{{this.customer_id}}"/>
 <div class="form-group">
 
     <label class="control-label" for="firstname">First Name:</label>
