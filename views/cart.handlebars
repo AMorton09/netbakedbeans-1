@@ -12,13 +12,15 @@
 <table bgcolor="grey" cellpadding="10">
 
   <tr>
-    <th bgcolor="white">Title</th>
-    <th bgcolor="white">Description</th>
-    <th bgcolor="white">Price</th>
+    <th bgcolor="black">Title</th>
+    <th bgcolor="black">Description</th>
+    <th bgcolor="black">Category</th>
+    <th bgcolor="black">Price</th>
   </tr>
   <tr>
     <td bgcolor="grey" width="15%">{{this.title}}</td>
     <td bgcolor="grey" width="70%">{{this.description}}</td>
+    <td bgcolor="grey" width="15%">{{this.category}}</td>
     <td bgcolor="grey" width="15%">{{this.rental_rate}}</td>
     <form method="post" action="/removefromcart">
        <input name="cart_id" type="hidden" value="{{this.cart_id}}"/>
