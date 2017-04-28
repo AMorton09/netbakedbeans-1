@@ -3,6 +3,7 @@ var config = require("./config");
 var path = require("path");
 var app = express();
 
+
 // keeps server info out of header
 app.disable("x-powered-by");
 
@@ -72,6 +73,10 @@ app.post("/rent", (req, res, next) => {
   });
       res.redirect(`cart`);
 });
+
+
+
+
 
 app.post("/updateuser", (req, res, next) => {
       var userEdit = req.body;
@@ -211,6 +216,16 @@ app.post("/removefromcart", (req, res, next) => {
       res.redirect(`cart`);
 });
 
+app.post("/removefromcheckout", (req, res, next) => {
+      var cartID = req.body;
+      console.log(cartID);
+      getModel().removeFromCart(cartID,(error, savedData) =>{
+
+  });
+      console.log("i ran here");
+      res.redirect(`checkout`);
+});
+
 app.post("/removemovie", (req, res, next) => {
       var film_id = req.body;
       console.log(film_id);
@@ -337,9 +352,8 @@ app.get("/customer", function(req, res) {
   res.render("customer");
 });
 
-app.get("/checkout", function(req, res) {
-  res.render("checkout");
-});
+
+
 app.get("/customer-editinfo", function(req, res) {
   res.render("customer-editinfo");
 });
@@ -454,6 +468,39 @@ app.get('/cart', (req, res, next) => {
     });
   });
 });
+
+app.get('/checkout', (req, res, next) => {
+  getModel().getCart(10000, req.query.pageToken, (err, entities, cursor) => {
+    if (err) {
+      next(err);
+      return;
+    }
+
+
+    res.render('checkout', {
+      movies: entities,
+
+      nextPageToken: cursor
+    });
+  });
+});
+
+app.get('/wishlist', (req, res, next) => {
+  getModel().getWishList(10000, req.query.pageToken, (err, entities, cursor) => {
+    if (err) {
+      next(err);
+      return;
+    }
+
+
+    res.render('wishlist', {
+      movies: entities,
+
+      nextPageToken: cursor
+    });
+  });
+});
+
 
 app.get("/nothing", function(req, res) {
   // Set the key and value as well as expiration

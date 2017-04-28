@@ -35,6 +35,24 @@ function getCart(limit, token, callback) {
   connection.end();
 }
 
+function getWishList(limit, token, callback) {
+  token = token ? parseInt(token, 10) : 0;
+  const connection = getConnectionGCloudSql();
+  connection.query(
+    'SELECT * FROM `wish_list` LIMIT ? OFFSET ?',
+    [limit, token],
+    (error, results) => {
+      if (error) {
+        callback(error);
+        return;
+      }
+      const hasMore = results.length === limit ? token + results.length : false;
+      callback(null, results, hasMore);
+    }
+  );
+  connection.end();
+}
+
 function listUsers(limit, token, callback) {
   token = token ? parseInt(token, 10) : 0;
   const connection = getConnectionGCloudSql();
@@ -369,4 +387,5 @@ module.exports = {
   deleteUser: deleteUser,
   search: search,
   updateUser: updateUser,
+  getWishList: getWishList,
 };
