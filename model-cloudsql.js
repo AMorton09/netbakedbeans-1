@@ -159,7 +159,7 @@ function updateMovie(movieEdit, callback) {
   const gcloudSqlConnection = getConnectionGCloudSql();
 
   gcloudSqlConnection.query(
-        'UPDATE `film` SET title = "'+movieEdit.title+'", description = "'+movieEdit.description+'", release_year = '+movieEdit.release_year+', rating = "'+movieEdit.rating+'" WHERE film_id = '+movieEdit.film_id+'',
+        'UPDATE `film` SET title = "'+movieEdit.title+'", description = "'+movieEdit.description+'", release_year = '+movieEdit.release_year+', rating = "'+movieEdit.rating+'", category = "'+movieEdit.category+'" WHERE film_id = '+movieEdit.film_id+'',
     movieEdit,
     (error, results) => {
      if (error) {
@@ -204,7 +204,7 @@ function addMovie(movieData, callback) {
   const gcloudSqlConnection = getConnectionGCloudSql();
 
     gcloudSqlConnection.query(
-      'INSERT INTO `film` (title, description, release_year, language_id, original_language_id, rental_duration, rental_rate, length, replacement_cost, rating, special_features ) VALUES ("'+movieData.title+'","'+movieData.description+'","'+movieData.release_year+'",'+1+','+1+','+3+','+movieData.rental_rate+','+movieData.length+','+29.95+',"'+movieData.rating+'", "Trailers")',
+      'INSERT INTO `film` (title, description, release_year, language_id, original_language_id, rental_duration, rental_rate, length, replacement_cost, rating, special_features, category ) VALUES ("'+movieData.title+'","'+movieData.description+'","'+movieData.release_year+'",'+1+','+1+','+3+','+movieData.rental_rate+','+movieData.length+','+29.95+',"'+movieData.rating+'", "Trailers", "'+movieData.category+'")',
 
 (error, response) => {
         //sends error to app.js to display 500 error
@@ -347,6 +347,51 @@ function addToCart(rentalFormDataSQL, callback) {
   gcloudSqlConnection.end();
 }
 
+function addToWishList(rentalFormDataSQL, callback) {
+  const gcloudSqlConnection = getConnectionGCloudSql();
+
+    gcloudSqlConnection.query(
+      'INSERT INTO `wish_list` SET ?',
+      rentalFormDataSQL,
+      (error, response) => {
+        //sends error to app.js to display 500 error
+        if (error) {
+          callback(error);
+
+          return;
+        }
+        console.log('it worked!');
+        console.log(response);
+
+      }
+    );
+
+  gcloudSqlConnection.end();
+}
+
+
+function removeFromWishList(wish_list_id, callback) {
+  const gcloudSqlConnection = getConnectionGCloudSql();
+
+    gcloudSqlConnection.query(
+      'DELETE FROM `wish_list` WHERE `wish_list_id` = '+wish_list_id.wish_list_id+';',
+
+      (error, response) => {
+        //sends error to app.js to display 500 error
+        if (error) {
+          console.log("error");
+          callback(error);
+
+          return;
+        }
+        console.log('it worked! RAN STATEMENT');
+        console.log(response);
+        gcloudSqlConnection.end();
+              }
+            );
+
+
+        }
 function removeFromCart(cartID, callback) {
   const gcloudSqlConnection = getConnectionGCloudSql();
 
@@ -388,4 +433,6 @@ module.exports = {
   search: search,
   updateUser: updateUser,
   getWishList: getWishList,
+  addToWishList: addToWishList,
+  removeFromWishList: removeFromWishList,
 };

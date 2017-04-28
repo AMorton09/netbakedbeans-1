@@ -67,14 +67,21 @@ app.post("/register", (req, res, next) => {
 
 app.post("/rent", (req, res, next) => {
       var rentalData = req.body;
-      var rentalDataSQL = {film_id:rentalData.film_id, title:rentalData.title, description:rentalData.description, rental_rate:rentalData.rental_rate};
+      var rentalDataSQL = {film_id:rentalData.film_id, title:rentalData.title, description:rentalData.description, rental_rate:rentalData.rental_rate,category:rentalData.category};
       console.log(rentalDataSQL);
       getModel().addToCart(rentalDataSQL,(error, savedData) =>{
   });
       res.redirect(`cart`);
 });
 
-
+app.post("/addtowishlist", (req, res, next) => {
+      var rentalData = req.body;
+      var rentalDataSQL = {film_id:rentalData.film_id, title:rentalData.title, description:rentalData.description, rental_rate:rentalData.rental_rate};
+      console.log(rentalDataSQL);
+      getModel().addToWishList(rentalDataSQL,(error, savedData) =>{
+  });
+      res.redirect(`wishlist`);
+});
 
 
 
@@ -214,6 +221,18 @@ app.post("/removefromcart", (req, res, next) => {
   });
       console.log("i ran here");
       res.redirect(`cart`);
+});
+
+app.post("/removefromwishlist", (req, res, next) => {
+      var wish_list_id = req.body;
+      console.log(wish_list_id);
+      getModel().removeFromWishList(wish_list_id,(error, savedData) =>{
+
+  });
+      console.log("i ran here");
+
+   
+      res.redirect(`wishlist`);
 });
 
 app.post("/removefromcheckout", (req, res, next) => {
