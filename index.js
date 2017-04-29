@@ -102,7 +102,7 @@ app.post("/updateuser", (req, res, next) => {
 
       res.redirect(`allusers`);
   });
-      
+
 });
 
 app.post("/updatemovie", (req, res, next) => {
@@ -233,7 +233,7 @@ app.post("/removefromwishlist", (req, res, next) => {
   });
       console.log("i ran here");
 
-   
+
       res.redirect(`wishlist`);
 });
 
@@ -292,7 +292,7 @@ app.post("/loginAuth", (req, res, next) => {
   getModel().loginAuth(loginFormData, (error, results) => {
 
   if(error){
-      
+
       console.log(error);
       res.render(`loginUnsuccessful`);
 
@@ -346,11 +346,11 @@ app.post("/editlogin", (req, res, next) => {
 app.post("/checkout", (req, res, next) => {
       var numMovies = parseInt(req.body.numberofitems);
       var userInfo = JSON.parse(req.cookies.userinfo);
-      
+
       getModel().getRentedMovies(userInfo.customer_id, (error, results) => {
 
       if(error){
-      
+
       console.log(error);
       res.render(`customer-unsuccessfuleditlogin`);
 
@@ -366,42 +366,42 @@ app.post("/checkout", (req, res, next) => {
       }
 }
 
-      
+
 });
 });
 
 
 app.post("/checkoutfinal", (req, res, next) => {
-    
+
     var rentedMovies = parseInt(req.body.numberofitems);
     var userInfo = JSON.parse(req.cookies.userinfo);
-    
+
     getModel().getRentedMovies(userInfo.customer_id, (error, results) => {
 
       if(error){
-      
+
       console.log(error);
       res.render(`checkoutunsuccessful`);
 
   }
-    
+
      var currentRentedMovies = parseInt(results[0].rentedmovies);
     console.log(currentRentedMovies);
-    var data = {numRented: currentRentedMovies+rentedMovies, customer_id:userInfo.customer_id};         
+    var data = {numRented: currentRentedMovies+rentedMovies, customer_id:userInfo.customer_id};
     getModel().updateUserRentals( data, (error, results) => {
 
       if(error){
-      
+
       console.log(error);
       //res.render(`customer-unsuccessfuleditlogin`);
 
       }
       console.log(results);
-      res.redirect(`checkout`);
-      
+      res.redirect(`customer-receipt`);
+
 });
 });
-  
+
 });
 
 
@@ -450,6 +450,29 @@ app.get("/customer-editlogin", function(req, res) {
 });
 app.get("/customer-unsuccessfuleditlogin", function(req, res) {
   res.render("customer-unsuccessfuleditlogin");
+});
+app.get("/customer-receipt", function(req, res) {
+  var userInfo = JSON.parse(req.cookies.userinfo);
+  console.log("userINFO HERE:");
+  console.log(userInfo);
+  getModel().getCart(userInfo, (err, entities) => {
+    if (err) {
+      next(err);
+      return;
+    }
+
+
+    res.render('customer-receipt', {
+      movies: entities,
+
+
+    });
+  });
+
+  res.render("customer-receipt");
+});
+app.get("/customer-returnmovies", function(req, res) {
+  res.render("customer-returnmovies");
 });
 app.get("/login", function(req, res) {
 
@@ -509,7 +532,7 @@ app.get('/allusers', (req, res, next) => {
 
 
 app.get('/movies', (req, res, next) => {
-  
+
   getModel().list(10000, req.query.pageToken, (err, entities, cursor) => {
     if (err) {
       next(err);
@@ -557,7 +580,7 @@ app.get('/cart', (req, res, next) => {
     res.render('cart', {
       movies: entities,
 
-      
+
     });
   });
 });
@@ -574,7 +597,7 @@ app.get('/checkoutunsuccessful', (req, res, next) => {
     res.render('checkoutunsuccessful', {
       movies: entities,
 
-      
+
     });
   });
 });
@@ -593,7 +616,7 @@ app.get('/checkout', (req, res, next) => {
     res.render('checkout', {
       movies: entities,
 
-      
+
     });
   });
 });

@@ -1,0 +1,56 @@
+
+<head>
+  <meta charset="UTF-8">
+  <title>Receipt Style Order Summary</title>
+
+</head>
+
+  <style>
+    * {
+  color: white;
+  }
+  </style>
+
+
+
+
+  {{#each movies}}
+  <body onload="getPrice();"></body>
+<table bgcolor="grey" cellpadding="10">
+
+  <tr>
+    <th bgcolor="white">Title</th>
+    <th bgcolor="white">Description</th>
+    <th bgcolor="white">Price</th>
+  </tr>
+
+<tr>
+  <td bgcolor="grey" width="15%">{{this.title}}</td>
+  <td bgcolor="grey" width="70%">{{this.description}}</td>
+  <td bgcolor="grey" width="15%">{{this.rental_rate}}</td>
+</tr>
+</table>
+
+{{/each}}
+
+<br><br>
+<strong>Price:</strong>
+<p id="price"> </p>
+<br><br>
+
+
+
+
+
+<script>
+
+	function getPrice(){
+		var checkoutPrice = 0;
+		{{#each movies}}
+
+		checkoutPrice += {{this.rental_rate}}
+		document.getElementById("price").innerHTML = checkoutPrice.toFixed(2);
+			{{/each}}
+	}
+
+</script>

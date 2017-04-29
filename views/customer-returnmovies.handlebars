@@ -5,7 +5,7 @@
  color: white;
 }
 </style>
-<h3>Cart</h3>
+<h3>Return Movies</h3>
 <br><br>
 {{#each movies}}
 <table bgcolor="grey" cellpadding="10">
@@ -21,26 +21,16 @@
     <td bgcolor="grey" width="70%">{{this.description}}</td>
     <td bgcolor="grey" width="15%">{{this.category}}</td>
     <td bgcolor="grey" width="15%">{{this.rental_rate}}</td>
-    <form method="post" action="/removefromcart">
+    <form method="post" action="/returnmovie">
        <input name="cart_id" type="hidden" value="{{this.cart_id}}"/>
-      <td bgcolor="grey" width="15%"><button  type="submit"class="btn btn-default">  X  </button></td>
+      <td bgcolor="grey" width="15%"><button  type="submit"class="btn btn-default">  Return  </button></td>
     </form>
   </tr>
 </table>
 {{/each}}
 
 
-<form method="post" action="/checkout">
 
-      <input id="items" name="numberofitems" type="hidden" value=""/>
-      <td bgcolor="grey" width="15%"><button  type="submit"class="btn btn-default">  Go to Checkout  </button>
-</form>
 
+    
 </div>
-      <script>
-  var checkoutItems = 0;
-  {{#each movies}}
-    checkoutItems += 1;
-  {{/each}}
-  document.getElementById('items').value = checkoutItems;
-</script>
