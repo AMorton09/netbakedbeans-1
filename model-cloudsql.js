@@ -17,19 +17,19 @@ function getConnectionGCloudSql() {
   return mysql.createConnection(options);
 }
 
-function getCart(limit, token, callback) {
-  token = token ? parseInt(token, 10) : 0;
+function getCart(custID, callback) {
+  
   const connection = getConnectionGCloudSql();
   connection.query(
-    'SELECT * FROM `cartItems` LIMIT ? OFFSET ?',
-    [limit, token],
+    'SELECT * FROM `cartItems` WHERE `customer_id` = '+custID.customer_id+'',
+    custID.customer_id,
     (error, results) => {
       if (error) {
-        callback(error);
+        console.log(error);
         return;
       }
-      const hasMore = results.length === limit ? token + results.length : false;
-      callback(null, results, hasMore);
+      
+      callback(null, results);
     }
   );
   connection.end();
@@ -107,11 +107,33 @@ function search(searchTerm, callback) {
         return;
       }
 
+
       callback(null, results);
     }
   );
   connection.end();
 }
+
+function getRentedMovies(customer_id, callback) {
+
+  const connection = getConnectionGCloudSql();
+  connection.query(
+    'SELECT `rentedmovies` FROM `users` WHERE `customer_id` = ?',
+    customer_id,
+    (error, results) => {
+      if (error) {
+
+        callback(error);
+        return;
+      }
+
+      callback(null, results);
+    }
+  );
+  connection.end();
+}
+
+
 
 function getMovie(film_id, callback) {
 
@@ -415,6 +437,35 @@ function removeFromCart(cartID, callback) {
 
         }
 
+function updateUserRentals(rentedMovies, customer_id, callback) {
+  const gcloudSqlConnection = getConnectionGCloudSql();
+
+    gcloudSqlConnection.query(
+      'UPDATE `users` SET rentedmovies = ? WHERE customer_id = ?;',
+        [rentedMovies,customer_id],
+      (error, response) => {
+        //sends error to app.js to display 500 error
+      try{
+        if (error) {
+          console.log("error");
+          callback(error,null);
+
+          return;
+        }
+        console.log('it worked! RAN STATEMENT');
+        console.log(response);
+        gcloudSqlConnection.end();
+              }
+              catch(){
+                
+              }
+            );
+        
+
+        }
+
+        }
+
 module.exports = {
   list: list,
   registerUser: registerUser,
@@ -435,4 +486,6 @@ module.exports = {
   getWishList: getWishList,
   addToWishList: addToWishList,
   removeFromWishList: removeFromWishList,
+  getRentedMovies: getRentedMovies,
+  updateUserRentals: updateUserRentals,
 };

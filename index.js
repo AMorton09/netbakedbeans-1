@@ -67,7 +67,8 @@ app.post("/register", (req, res, next) => {
 
 app.post("/rent", (req, res, next) => {
       var rentalData = req.body;
-      var rentalDataSQL = {film_id:rentalData.film_id, title:rentalData.title, description:rentalData.description, rental_rate:rentalData.rental_rate,category:rentalData.category};
+      var userInfo = JSON.parse(req.cookies.userinfo);
+      var rentalDataSQL = {customer_id:userInfo.customer_id, film_id:rentalData.film_id, title:rentalData.title, description:rentalData.description, rental_rate:rentalData.rental_rate,category:rentalData.category};
       console.log(rentalDataSQL);
       getModel().addToCart(rentalDataSQL,(error, savedData) =>{
   });
@@ -76,7 +77,8 @@ app.post("/rent", (req, res, next) => {
 
 app.post("/addtowishlist", (req, res, next) => {
       var rentalData = req.body;
-      var rentalDataSQL = {film_id:rentalData.film_id, title:rentalData.title, description:rentalData.description, rental_rate:rentalData.rental_rate};
+      var userInfo = JSON.parse(req.cookies.userinfo);
+      var rentalDataSQL = {customer_id:userInfo.customer_id, film_id:rentalData.film_id, title:rentalData.title, description:rentalData.description, rental_rate:rentalData.rental_rate,category:rentalData.category};
       console.log(rentalDataSQL);
       getModel().addToWishList(rentalDataSQL,(error, savedData) =>{
   });
@@ -289,8 +291,8 @@ app.post("/loginAuth", (req, res, next) => {
 
   getModel().loginAuth(loginFormData, (error, results) => {
 
-      if(error){
-      console.log("search DATA:====");
+  if(error){
+      
       console.log(error);
       res.render(`loginUnsuccessful`);
 
@@ -299,11 +301,12 @@ app.post("/loginAuth", (req, res, next) => {
 
 
 
-    res.cookie("userinfo",results, { expire: new Date() + 9999 })
+    res.cookie("userinfo",JSON.stringify(results), { expire: new Date() + 9999 })
 
     if (results.admin == 0){
       console.log("i ran so far away");
-    res.render('customer');
+
+    res.redirect('customer');
   }
   else if (results.admin == 1){
     res.render('admin-home');
@@ -338,6 +341,55 @@ app.post("/editlogin", (req, res, next) => {
   });
 });
 
+
+
+app.post("/checkout", (req, res, next) => {
+      var numMovies = parseInt(req.body.numberofitems);
+      var userInfo = JSON.parse(req.cookies.userinfo);
+      
+      getModel().getRentedMovies(userInfo.customer_id, (error, results) => {
+
+      if(error){
+      
+      console.log(error);
+      res.render(`customer-unsuccessfuleditlogin`);
+
+  }
+      else{
+      var rentedMovies = parseInt(results[0].rentedmovies);
+      console.log(numMovies);
+      if(numMovies + rentedMovies < 6){
+        res.redirect(`checkout`);
+      }
+      else{
+        res.redirect(`checkoutunsucessful`);
+      }
+}
+
+      
+});
+});
+
+
+app.post("/checkoutfinal", (req, res, next) => {
+    var rentedMovies = parseInt(req.body.numberofitems);
+    var userInfo = JSON.parse(req.cookies.userinfo);
+    getModel().getRentedMovies( rentedMovies, userInfo.customer_id, (error, results) => {
+
+      if(error){
+      
+      console.log(error);
+      res.render(`customer-unsuccessfuleditlogin`);
+
+      }
+      console.log(results);
+      res.redirect(`checkout`);
+      
+});
+});
+
+
+
 //_______________________
 //|                     |
 //|      APP.GET        |
@@ -368,6 +420,7 @@ app.get("/admin-reports", function(req, res) {
 
 
 app.get("/customer", function(req, res) {
+  console.log(req.cookies);
   res.render("customer");
 });
 
@@ -440,6 +493,7 @@ app.get('/allusers', (req, res, next) => {
 
 
 app.get('/movies', (req, res, next) => {
+  
   getModel().list(10000, req.query.pageToken, (err, entities, cursor) => {
     if (err) {
       next(err);
@@ -465,6 +519,7 @@ app.get('/admin-movies', (req, res, next) => {
 
 
     res.render('admin-movies', {
+
       movies: entities,
 
       nextPageToken: cursor
@@ -473,7 +528,10 @@ app.get('/admin-movies', (req, res, next) => {
 });
 
 app.get('/cart', (req, res, next) => {
-  getModel().getCart(10000, req.query.pageToken, (err, entities, cursor) => {
+  var userInfo = JSON.parse(req.cookies.userinfo);
+  console.log("userINFO HERE:");
+  console.log(userInfo);
+  getModel().getCart(userInfo, (err, entities) => {
     if (err) {
       next(err);
       return;
@@ -483,13 +541,33 @@ app.get('/cart', (req, res, next) => {
     res.render('cart', {
       movies: entities,
 
-      nextPageToken: cursor
+      
     });
   });
 });
 
+app.get('/checkoutunsucessful', (req, res, next) => {
+  var userInfo = JSON.parse(req.cookies.userinfo);
+    getModel().getCart(userInfo, (err, entities) => {
+    if (err) {
+      next(err);
+      return;
+    }
+
+
+    res.render('cart', {
+      movies: entities,
+
+      
+    });
+  });
+});
+
+
+
 app.get('/checkout', (req, res, next) => {
-  getModel().getCart(10000, req.query.pageToken, (err, entities, cursor) => {
+   var userInfo = JSON.parse(req.cookies.userinfo);
+    getModel().getCart(userInfo, (err, entities) => {
     if (err) {
       next(err);
       return;
@@ -499,7 +577,7 @@ app.get('/checkout', (req, res, next) => {
     res.render('checkout', {
       movies: entities,
 
-      nextPageToken: cursor
+      
     });
   });
 });

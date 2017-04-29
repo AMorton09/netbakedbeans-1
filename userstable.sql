@@ -11,5 +11,6 @@ CREATE TABLE users (
  expdate varchar(50),
  ccv varchar(50),
  admin int,
+ rentedmovies int NOT NULL DEFAULT 0,
  PRIMARY KEY  (customer_id)
 );
