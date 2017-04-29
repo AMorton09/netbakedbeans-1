@@ -362,7 +362,7 @@ app.post("/checkout", (req, res, next) => {
         res.redirect(`checkout`);
       }
       else{
-        res.redirect(`checkoutunsucessful`);
+        res.redirect(`checkoutunsuccessful`);
       }
 }
 
@@ -372,20 +372,36 @@ app.post("/checkout", (req, res, next) => {
 
 
 app.post("/checkoutfinal", (req, res, next) => {
+    
     var rentedMovies = parseInt(req.body.numberofitems);
     var userInfo = JSON.parse(req.cookies.userinfo);
-    getModel().getRentedMovies( rentedMovies, userInfo.customer_id, (error, results) => {
+    
+    getModel().getRentedMovies(userInfo.customer_id, (error, results) => {
 
       if(error){
       
       console.log(error);
-      res.render(`customer-unsuccessfuleditlogin`);
+      res.render(`checkoutunsuccessful`);
+
+  }
+    
+     var currentRentedMovies = parseInt(results[0].rentedmovies);
+    console.log(currentRentedMovies);
+    var data = {numRented: currentRentedMovies+rentedMovies, customer_id:userInfo.customer_id};         
+    getModel().updateUserRentals( data, (error, results) => {
+
+      if(error){
+      
+      console.log(error);
+      //res.render(`customer-unsuccessfuleditlogin`);
 
       }
       console.log(results);
       res.redirect(`checkout`);
       
 });
+});
+  
 });
 
 
@@ -546,7 +562,7 @@ app.get('/cart', (req, res, next) => {
   });
 });
 
-app.get('/checkoutunsucessful', (req, res, next) => {
+app.get('/checkoutunsuccessful', (req, res, next) => {
   var userInfo = JSON.parse(req.cookies.userinfo);
     getModel().getCart(userInfo, (err, entities) => {
     if (err) {
@@ -555,7 +571,7 @@ app.get('/checkoutunsucessful', (req, res, next) => {
     }
 
 
-    res.render('cart', {
+    res.render('checkoutunsuccessful', {
       movies: entities,
 
       

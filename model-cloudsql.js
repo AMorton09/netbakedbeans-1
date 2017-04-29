@@ -437,34 +437,24 @@ function removeFromCart(cartID, callback) {
 
         }
 
-function updateUserRentals(rentedMovies, customer_id, callback) {
-  const gcloudSqlConnection = getConnectionGCloudSql();
+function updateUserRentals(userData, callback) {
+  const connection = getConnectionGCloudSql();
+ 
+  connection.query(
 
-    gcloudSqlConnection.query(
-      'UPDATE `users` SET rentedmovies = ? WHERE customer_id = ?;',
-        [rentedMovies,customer_id],
-      (error, response) => {
-        //sends error to app.js to display 500 error
-      try{
-        if (error) {
-          console.log("error");
-          callback(error,null);
+    'UPDATE `users` SET rentedmovies ='+userData.numRented+' WHERE customer_id = '+userData.customer_id+';',
 
-          return;
-        }
-        console.log('it worked! RAN STATEMENT');
-        console.log(response);
-        gcloudSqlConnection.end();
-              }
-              catch(){
-                
-              }
-            );
-        
-
-        }
-
-        }
+    userData,
+    (error, results) => {
+      if (error) {
+        callback(error);
+        return;
+      }
+      callback(null,results);
+    }
+  );
+  connection.end();
+}
 
 module.exports = {
   list: list,
