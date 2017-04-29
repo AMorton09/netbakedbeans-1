@@ -456,6 +456,22 @@ function updateUserRentals(userData, callback) {
   connection.end();
 }
 
+function deleteUserCart(customer_id, callback) {
+  const connection = getConnectionGCloudSql();
+  connection.query(
+    'DELETE FROM `cartItems` WHERE `customer_id` ='+customer_id+';',
+    customer_id,
+    (error, results) => {
+      if (error) {
+        callback(error);
+        return;
+      }
+    callback(results);
+  }
+  );
+  connection.end();
+}
+
 module.exports = {
   list: list,
   registerUser: registerUser,
@@ -478,4 +494,5 @@ module.exports = {
   removeFromWishList: removeFromWishList,
   getRentedMovies: getRentedMovies,
   updateUserRentals: updateUserRentals,
+  deleteUserCart: deleteUserCart,
 };

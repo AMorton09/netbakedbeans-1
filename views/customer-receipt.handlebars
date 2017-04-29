@@ -1,17 +1,13 @@
-
-<head>
-  <meta charset="UTF-8">
-  <title>Receipt Style Order Summary</title>
-
-</head>
-
+<div class="page-header">
+  {{>navbaradmin}}
   <style>
     * {
-  color: white;
-  }
-  </style>
+ color: white;
+}
+</style>
 
 
+<h3>Receipt</h3>
 
 
   {{#each movies}}
@@ -19,14 +15,14 @@
 <table bgcolor="grey" cellpadding="10">
 
   <tr>
-    <th bgcolor="white">Title</th>
-    <th bgcolor="white">Description</th>
-    <th bgcolor="white">Price</th>
+    <th bgcolor="black">Title</th>
+    <th bgcolor="black">Description</th>
+    <th bgcolor="black">Price</th>
   </tr>
 
 <tr>
   <td bgcolor="grey" width="15%">{{this.title}}</td>
-  <td bgcolor="grey" width="70%">{{this.description}}</td>
+  <td bgcolor="grey" width="45%">{{this.description}}</td>
   <td bgcolor="grey" width="15%">{{this.rental_rate}}</td>
 </tr>
 </table>
@@ -34,7 +30,7 @@
 {{/each}}
 
 <br><br>
-<strong>Price:</strong>
+<strong>Order Total:</strong>
 <p id="price"> </p>
 <br><br>
 

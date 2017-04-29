@@ -445,14 +445,18 @@ app.get("/customer", function(req, res) {
 app.get("/customer-editinfo", function(req, res) {
   res.render("customer-editinfo");
 });
+
 app.get("/customer-editlogin", function(req, res) {
   res.render("customer-editlogin");
 });
+
 app.get("/customer-unsuccessfuleditlogin", function(req, res) {
   res.render("customer-unsuccessfuleditlogin");
 });
+
 app.get("/customer-receipt", function(req, res) {
   var userInfo = JSON.parse(req.cookies.userinfo);
+  
   console.log("userINFO HERE:");
   console.log(userInfo);
   getModel().getCart(userInfo, (err, entities) => {
@@ -460,17 +464,20 @@ app.get("/customer-receipt", function(req, res) {
       next(err);
       return;
     }
-
+    console.log("testimony");
 
     res.render('customer-receipt', {
-      movies: entities,
+      movies: entities
 
 
     });
   });
-
-  res.render("customer-receipt");
+   getModel().deleteUserCart(userInfo.customer_id,(error, results) =>{
+        console.log(results);
+  });
 });
+
+
 app.get("/customer-returnmovies", function(req, res) {
   res.render("customer-returnmovies");
 });
