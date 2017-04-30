@@ -1,0 +1,37 @@
+<div class="page-header">
+  {{>bsnavbar2}}
+  <style>
+    * {
+ color: white;
+}
+</style>
+<h3>Rental History</h3>
+<br><br>
+
+
+
+{{#each movies}}
+
+
+
+
+<table bgcolor="grey" cellpadding="10">
+
+  <tr>
+    <th bgcolor="black">Title</th>
+    <th bgcolor="black">Description</th>
+    <th bgcolor="black">Category</th>
+    <th bgcolor="black">Price</th>
+  </tr>
+  <tr>
+    <td bgcolor="grey" width="15%">{{this.title}}</td>
+    <td bgcolor="grey" width="70%">{{this.description}}</td>
+    <td bgcolor="grey" width="15%">{{this.category}}</td>
+    <td bgcolor="grey" width="15%">{{this.rental_rate}}</td>
+
+    </form>
+  </tr>
+</table>
+{{/each}}
+
+</div>

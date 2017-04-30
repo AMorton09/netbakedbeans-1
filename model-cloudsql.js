@@ -18,7 +18,7 @@ function getConnectionGCloudSql() {
 }
 
 function getCart(custID, callback) {
-  
+
   const connection = getConnectionGCloudSql();
   connection.query(
     'SELECT * FROM `cartItems` WHERE `customer_id` = '+custID.customer_id+'',
@@ -28,7 +28,7 @@ function getCart(custID, callback) {
         console.log(error);
         return;
       }
-      
+
       callback(null, results);
     }
   );
@@ -36,7 +36,7 @@ function getCart(custID, callback) {
 }
 
 function getMoviesInCart(custID, callback) {
-  
+
   const connection = getConnectionGCloudSql();
   connection.query(
     'SELECT * FROM `cartItems` WHERE `customer_id` = '+custID.customer_id+'',
@@ -46,7 +46,7 @@ function getMoviesInCart(custID, callback) {
         console.log(error);
         return;
       }
-      
+
       callback(null, results);
     }
   );
@@ -389,9 +389,9 @@ function addToCart(rentalFormDataSQL, callback) {
 
 function addToRentals(x, callback) {
   const gcloudSqlConnection = getConnectionGCloudSql();
-  
+
     gcloudSqlConnection.query(
-      'INSERT INTO `rentedMovies`  (customer_id, film_id, title, description, rental_rate, category) VALUES ('+x.customer_id+', "'+x.film_id+'", "'+x.title+'", "'+x.description+'", "'+x.rental_rate+'", "'+x.category+'" );',
+      'INSERT INTO `rentedMovies`  (customer_id, film_id, title, description, rental_rate, category, is_rented) VALUES ('+x.customer_id+', "'+x.film_id+'", "'+x.title+'", "'+x.description+'", "'+x.rental_rate+'", "'+x.category+'", "Rented");',
       x,
       (error, response) => {
         //sends error to app.js to display 500 error
@@ -481,7 +481,7 @@ function removeFromCart(cartID, callback) {
 
 function updateUserRentals(userData, callback) {
   const connection = getConnectionGCloudSql();
- 
+
   connection.query(
 
     'UPDATE `users` SET rentedmovies ='+userData.numRented+' WHERE customer_id = '+userData.customer_id+';',
