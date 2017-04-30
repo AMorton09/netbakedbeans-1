@@ -836,35 +836,18 @@ app.get("/reports-inventory", (req, res, next) => {
 
 app.get("/reports-rented", (req, res, next) => {
 
-  getModel().list(10000, req.query.pageToken, (err, entities, cursor) => {
-    if (err) {
-      next(err);
-      return;
-    }
-
 
     res.render('reports-rented', {
-      movies: entities,
 
-      nextPageToken: cursor
-    });
   });
 });
 
-app.get("/reports-inventory", (req, res, next) => {
-
-  getModel().list(10000, req.query.pageToken, (err, entities, cursor) => {
-    if (err) {
-      next(err);
-      return;
-    }
+app.get("/reports-sales", (req, res, next) => {
 
 
-    res.render('reports-inventory', {
-      movies: entities,
 
-      nextPageToken: cursor
-    });
+    res.render('reports-sales', {
+    
   });
 });
 
