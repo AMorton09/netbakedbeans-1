@@ -369,6 +369,33 @@ function addToCart(rentalFormDataSQL, callback) {
   gcloudSqlConnection.end();
 }
 
+function addToRentals(rentalFormDataSQL, callback) {
+  const gcloudSqlConnection = getConnectionGCloudSql();
+    console.log("DATAAFADSFDSAFADS"+rentalFormDataSQL[0].customer_id);
+    for (var y in rentalFormDataSQL){
+      var x = y;
+      console.log("RAN"+x);
+    gcloudSqlConnection.query(
+      'INSERT INTO `rentedMovies`  (customer_id, film_id, title, description, rental_rate, category) VALUES ('+x.customer_id+', "'+x.film_id+'", "'+x.title+'", "'+x.description+'", "'+x.rental_rate+'", "'+x.category+'" );',
+      x,
+      (error, response) => {
+        //sends error to app.js to display 500 error
+        if (error) {
+          callback(error);
+          console.log("error");
+          return;
+        }
+        console.log('it worked!');
+        console.log(response);
+
+      }
+    );
+}
+  gcloudSqlConnection.end();
+}
+
+
+
 function addToWishList(rentalFormDataSQL, callback) {
   const gcloudSqlConnection = getConnectionGCloudSql();
 
@@ -495,4 +522,5 @@ module.exports = {
   getRentedMovies: getRentedMovies,
   updateUserRentals: updateUserRentals,
   deleteUserCart: deleteUserCart,
+  addToRentals: addToRentals,
 };

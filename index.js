@@ -375,6 +375,7 @@ app.post("/checkoutfinal", (req, res, next) => {
 
     var rentedMovies = parseInt(req.body.numberofitems);
     var userInfo = JSON.parse(req.cookies.userinfo);
+    
 
     getModel().getRentedMovies(userInfo.customer_id, (error, results) => {
 
@@ -393,15 +394,29 @@ app.post("/checkoutfinal", (req, res, next) => {
       if(error){
 
       console.log(error);
-      //res.render(`customer-unsuccessfuleditlogin`);
+      
 
       }
       console.log(results);
+      
+
+});
+
+});
+      getModel().getCart(userInfo, (err, entities) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    console.log("i ran ASDFSDAFASDFDAS");
+
+    getModel().addToRentals(entities,(error, results) =>{
+      console.log(results);
+  });
+    
+  });
+      
       res.redirect(`customer-receipt`);
-
-});
-});
-
 });
 
 
@@ -472,9 +487,7 @@ app.get("/customer-receipt", function(req, res) {
 
     });
   });
-   getModel().deleteUserCart(userInfo.customer_id,(error, results) =>{
-        console.log(results);
-  });
+ 
 });
 
 
