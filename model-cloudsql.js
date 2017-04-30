@@ -154,7 +154,7 @@ function sort(sortTerm, callback) {
 
   const connection = getConnectionGCloudSql();
   connection.query(
-    'SELECT * FROM `film` WHERE category = "'+sortTerm.category'";',
+    'SELECT * FROM `film` WHERE category = "'+sortTerm.category+'";',
 
     (error, results) => {
       if (error) {
@@ -622,7 +622,7 @@ function updateSales(revenue,numSold, callback) {
 
     'UPDATE `sales` SET numSold = numSold +'+numSold+', revenue = revenue +'+revenue+' WHERE sales_id = 1;',
 
-    
+
     (error, results) => {
       if (error) {
         callback(error);

@@ -282,13 +282,13 @@ app.post("/search", (req, res, next) => {
 
     console.log(results);
      res.render("movies", {movies: results});
-
+});
   });
 
 app.post("/sort", (req, res, next) => {
       var sortTerm = req.body;
 
-      
+
       getModel().sort(sortTerm, (err, results) => {
     if (err) {
       console.log(err);
@@ -459,13 +459,13 @@ app.post("/goHome", (req, res, next) => {
        getModel().deleteUserCart(userInfo.customer_id,(error, results) =>{
       console.log(results);
   });
-      
+
       res.render(`home`);
 });
 
 app.post("/returnMovie", (req, res, next) => {
        var movieInfo = req.body;
-      
+
       getModel().returnMovie(movieInfo,(error, results) =>{
       console.log(results);
   });
@@ -563,7 +563,7 @@ app.get("/customer-returnmovies", function(req, res) {
 
   });
 });
- 
+
 });
 
 
