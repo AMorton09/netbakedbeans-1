@@ -35,6 +35,24 @@ function getCart(custID, callback) {
   connection.end();
 }
 
+function getMoviesInCart(custID, callback) {
+  
+  const connection = getConnectionGCloudSql();
+  connection.query(
+    'SELECT * FROM `cartItems` WHERE `customer_id` = '+custID.customer_id+'',
+    custID.customer_id,
+    (error, results) => {
+      if (error) {
+        console.log(error);
+        return;
+      }
+      
+      callback(null, results);
+    }
+  );
+  connection.end();
+}
+
 function getWishList(limit, token, callback) {
   token = token ? parseInt(token, 10) : 0;
   const connection = getConnectionGCloudSql();
@@ -369,12 +387,9 @@ function addToCart(rentalFormDataSQL, callback) {
   gcloudSqlConnection.end();
 }
 
-function addToRentals(rentalFormDataSQL, callback) {
+function addToRentals(x, callback) {
   const gcloudSqlConnection = getConnectionGCloudSql();
-    console.log("DATAAFADSFDSAFADS"+rentalFormDataSQL[0].customer_id);
-    for (var y in rentalFormDataSQL){
-      var x = y;
-      console.log("RAN"+x);
+  
     gcloudSqlConnection.query(
       'INSERT INTO `rentedMovies`  (customer_id, film_id, title, description, rental_rate, category) VALUES ('+x.customer_id+', "'+x.film_id+'", "'+x.title+'", "'+x.description+'", "'+x.rental_rate+'", "'+x.category+'" );',
       x,
@@ -390,7 +405,7 @@ function addToRentals(rentalFormDataSQL, callback) {
 
       }
     );
-}
+
   gcloudSqlConnection.end();
 }
 
@@ -523,4 +538,5 @@ module.exports = {
   updateUserRentals: updateUserRentals,
   deleteUserCart: deleteUserCart,
   addToRentals: addToRentals,
+  getMoviesInCart: getMoviesInCart,
 };

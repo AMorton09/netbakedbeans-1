@@ -408,11 +408,13 @@ app.post("/checkoutfinal", (req, res, next) => {
       next(err);
       return;
     }
-    console.log("i ran ASDFSDAFASDFDAS");
-
-    getModel().addToRentals(entities,(error, results) =>{
+    
+    for (x=0; x<rentedMovies; x++){
+     
+    getModel().addToRentals(entities[x],(error, results) =>{
       console.log(results);
   });
+  }
     
   });
       
@@ -479,7 +481,7 @@ app.get("/customer-receipt", function(req, res) {
       next(err);
       return;
     }
-    console.log("testimony");
+    
 
     res.render('customer-receipt', {
       movies: entities
