@@ -416,6 +416,14 @@ app.post("/checkoutfinal", (req, res, next) => {
   });
   }
 
+      for (x=0; x<rentedMovies; x++){
+
+    getModel().updateStock(entities[x],(error, results) =>{
+      console.log(results);
+  });
+  }
+
+
   });
 
       res.redirect(`customer-receipt`);

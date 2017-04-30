@@ -214,6 +214,27 @@ function updateMovie(movieEdit, callback) {
   gcloudSqlConnection.end();
 }
 
+function updateStock(film_id, callback) {
+
+  const gcloudSqlConnection = getConnectionGCloudSql();
+
+  gcloudSqlConnection.query(
+        'UPDATE `film` SET stock = stock - 1 WHERE film_id = '+film_id.film_id+'',
+    film_id,
+    (error, results) => {
+     if (error) {
+
+        callback(error);
+        return;
+      }
+
+      callback(null, results);
+    }
+  );
+  gcloudSqlConnection.end();
+}
+
+
 // [START create]
 function registerUser(registerFormData, callback) {
   const gcloudSqlConnection = getConnectionGCloudSql();
@@ -539,4 +560,5 @@ module.exports = {
   deleteUserCart: deleteUserCart,
   addToRentals: addToRentals,
   getMoviesInCart: getMoviesInCart,
+  updateStock: updateStock,
 };
