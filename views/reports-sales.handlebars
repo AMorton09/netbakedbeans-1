@@ -4,12 +4,13 @@
     * {
  color: white;
 }
+{{# each sales}}
 </style>
 <h3>Sales Report</h3>
 <br><br>
-<br>Total Revenue:<br>
-<br>Total Movies Rented:<br>
-
+<br>Total Revenue:{{this.revenue}}<br>
+<br>Total Movies Rented:{{this.numSold}}<br>
+{{/each}}
 
 
 

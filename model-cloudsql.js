@@ -35,6 +35,25 @@ function getCart(custID, callback) {
   connection.end();
 }
 
+function getSales(callback) {
+
+  const connection = getConnectionGCloudSql();
+  connection.query(
+    'SELECT * FROM `sales` WHERE `sales_id` = 1',
+   
+    (error, results) => {
+      if (error) {
+        console.log(error);
+        return;
+      }
+
+      callback(null, results);
+    }
+  );
+  connection.end();
+}
+
+
 function getRentals(custID, callback) {
 
   const connection = getConnectionGCloudSql();
@@ -217,7 +236,7 @@ function getUser(user_id, callback) {
   const connection = getConnectionGCloudSql();
   connection.query(
     'SELECT * FROM `users` WHERE `customer_id` = ?',
-    user_id.customer_id,
+    user_id,
     (error, results) => {
       if (error) {
 
@@ -634,6 +653,24 @@ function updateSales(revenue,numSold, callback) {
   connection.end();
 }
 
+function getCurrentRentals( callback) {
+
+  const connection = getConnectionGCloudSql();
+  connection.query(
+    'SELECT * FROM `rentedMovies` WHERE  is_rented = "Rented"',
+
+    (error, results) => {
+      if (error) {
+        console.log(error);
+        return;
+      }
+
+      callback(null, results);
+    }
+  );
+  connection.end();
+}
+
 
 module.exports = {
   list: list,
@@ -666,4 +703,6 @@ module.exports = {
   updateStockReturn: updateStockReturn,
   updateSales: updateSales,
   sort: sort,
+  getSales: getSales,
+  getCurrentRentals: getCurrentRentals,
 };
