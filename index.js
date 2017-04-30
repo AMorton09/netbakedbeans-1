@@ -496,6 +496,8 @@ app.get("/customer-receipt", function(req, res) {
 app.get("/customer-returnmovies", function(req, res) {
   res.render("customer-returnmovies");
 });
+
+
 app.get("/customer-purchasehistory", function(req, res) {var userInfo = JSON.parse(req.cookies.userinfo);
 console.log("userINFO HERE:");
 console.log(userInfo);
@@ -506,7 +508,7 @@ getModel().getCart(userInfo, (err, entities) => {
   }
 
 
-  res.render('purchasehistory', {
+  res.render('customer-purchasehistory', {
     movies: entities,
 
 
