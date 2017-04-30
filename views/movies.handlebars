@@ -14,6 +14,23 @@
  <input type="radio" name="category" value="rating"> Rating<br>
   <button id="search-movies" type="submit"class="btn btn-default"> Search </button>
 </form>
+
+
+<form name="form-sort" method="post" action="/sort">
+ <input type="radio" name="category" value="Action" checked="checked"> Action
+ <input type="radio" name="category" value="Animation"> Animation
+ <input type="radio" name="category" value="Classics"> Classics
+ <input type="radio" name="category" value="Comedy"> Comedy
+ <input type="radio" name="category" value="Documentaries"> Documentaries
+ <input type="radio" name="category" value="Drama"> Drama
+ <input type="radio" name="category" value="Family"> Family
+ <input type="radio" name="category" value="Foreign"> Foreign
+ <input type="radio" name="category" value="Horror"> Horror
+ <input type="radio" name="category" value="Sports"> Sports<br>
+ <button id="search-movies" type="submit"class="btn btn-default"> Sort </button>
+</form>
+
+
 {{#each movies}}
 <table bgcolor="grey" cellpadding="10">
 

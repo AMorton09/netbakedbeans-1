@@ -35,6 +35,24 @@ function getCart(custID, callback) {
   connection.end();
 }
 
+function getRentals(custID, callback) {
+
+  const connection = getConnectionGCloudSql();
+  connection.query(
+    'SELECT * FROM `rentedMovies` WHERE `customer_id` = '+custID.customer_id+' and is_rented = "Rented"',
+    custID.customer_id,
+    (error, results) => {
+      if (error) {
+        console.log(error);
+        return;
+      }
+
+      callback(null, results);
+    }
+  );
+  connection.end();
+}
+
 function getMoviesInCart(custID, callback) {
 
   const connection = getConnectionGCloudSql();
@@ -132,6 +150,27 @@ function search(searchTerm, callback) {
   connection.end();
 }
 
+function sort(sortTerm, callback) {
+
+  const connection = getConnectionGCloudSql();
+  connection.query(
+    'SELECT * FROM `film` WHERE category = "'+sortTerm.category'";',
+
+    (error, results) => {
+      if (error) {
+
+        callback(error);
+        return;
+      }
+
+
+      callback(null, results);
+    }
+  );
+  connection.end();
+}
+
+
 function getRentedMovies(customer_id, callback) {
 
   const connection = getConnectionGCloudSql();
@@ -214,6 +253,8 @@ function updateMovie(movieEdit, callback) {
   gcloudSqlConnection.end();
 }
 
+
+
 function updateStock(film_id, callback) {
 
   const gcloudSqlConnection = getConnectionGCloudSql();
@@ -234,6 +275,26 @@ function updateStock(film_id, callback) {
   gcloudSqlConnection.end();
 }
 
+
+function updateStockReturn(film_id, callback) {
+
+  const gcloudSqlConnection = getConnectionGCloudSql();
+
+  gcloudSqlConnection.query(
+        'UPDATE `film` SET stock = stock + 1 WHERE film_id = '+film_id.film_id+'',
+    film_id,
+    (error, results) => {
+     if (error) {
+
+        callback(error);
+        return;
+      }
+
+      callback(null, results);
+    }
+  );
+  gcloudSqlConnection.end();
+}
 
 // [START create]
 function registerUser(registerFormData, callback) {
@@ -535,6 +596,45 @@ function deleteUserCart(customer_id, callback) {
   connection.end();
 }
 
+function returnMovie(rental_id, callback) {
+  const connection = getConnectionGCloudSql();
+
+  connection.query(
+
+    'UPDATE `rentedMovies` SET is_rented = "Turned In" WHERE rental_id = '+rental_id.rental_id+';',
+
+    rental_id,
+    (error, results) => {
+      if (error) {
+        callback(error);
+        return;
+      }
+      callback(null,results);
+    }
+  );
+  connection.end();
+}
+
+function updateSales(revenue,numSold, callback) {
+  const connection = getConnectionGCloudSql();
+
+  connection.query(
+
+    'UPDATE `sales` SET numSold = numSold +'+numSold+', revenue = revenue +'+revenue+' WHERE sales_id = 1;',
+
+    
+    (error, results) => {
+      if (error) {
+        callback(error);
+        return;
+      }
+      callback(null,results);
+    }
+  );
+  connection.end();
+}
+
+
 module.exports = {
   list: list,
   registerUser: registerUser,
@@ -561,4 +661,9 @@ module.exports = {
   addToRentals: addToRentals,
   getMoviesInCart: getMoviesInCart,
   updateStock: updateStock,
+  getRentals: getRentals,
+  returnMovie: returnMovie,
+  updateStockReturn: updateStockReturn,
+  updateSales: updateSales,
+  sort: sort,
 };

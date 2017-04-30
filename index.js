@@ -285,7 +285,26 @@ app.post("/search", (req, res, next) => {
 
   });
 
+app.post("/sort", (req, res, next) => {
+      var sortTerm = req.body;
+
+      
+      getModel().sort(sortTerm, (err, results) => {
+    if (err) {
+      console.log(err);
+      next(err);
+      return;
+    }
+
+    console.log(results);
+     res.render("movies", {movies: results});
+
+  });
+
 });
+
+
+
 app.post("/loginAuth", (req, res, next) => {
  var loginFormData = req.body;
 
@@ -371,9 +390,11 @@ app.post("/checkout", (req, res, next) => {
 });
 
 
+
 app.post("/checkoutfinal", (req, res, next) => {
 
     var rentedMovies = parseInt(req.body.numberofitems);
+    var totalRevneue = parseFloat(req.body.revenue);
     var userInfo = JSON.parse(req.cookies.userinfo);
 
 
@@ -425,10 +446,36 @@ app.post("/checkoutfinal", (req, res, next) => {
 
 
   });
+      getModel().updateSales(totalRevneue, rentedMovies,(error, results) =>{
+      console.log(results);
+  });
 
       res.redirect(`customer-receipt`);
 });
 
+
+app.post("/goHome", (req, res, next) => {
+      var userInfo = JSON.parse(req.cookies.userinfo);
+       getModel().deleteUserCart(userInfo.customer_id,(error, results) =>{
+      console.log(results);
+  });
+      
+      res.render(`home`);
+});
+
+app.post("/returnMovie", (req, res, next) => {
+       var movieInfo = req.body;
+      
+      getModel().returnMovie(movieInfo,(error, results) =>{
+      console.log(results);
+  });
+
+      getModel().updateStockReturn(movieInfo,(error, results) =>{
+      console.log(results);
+  });
+
+      res.redirect(`customer-returnmovies`);
+});
 
 
 //_______________________
@@ -502,7 +549,21 @@ app.get("/customer-receipt", function(req, res) {
 
 
 app.get("/customer-returnmovies", function(req, res) {
-  res.render("customer-returnmovies");
+  var userInfo = JSON.parse(req.cookies.userinfo);
+  getModel().getRentals(userInfo, (err, entities) => {
+  if (err) {
+    next(err);
+    return;
+  }
+
+
+  res.render('customer-returnmovies', {
+    movies: entities,
+
+
+  });
+});
+ 
 });
 
 
