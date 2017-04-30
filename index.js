@@ -844,10 +844,8 @@ app.get("/reports-rented", (req, res, next) => {
 
 app.get("/reports-sales", (req, res, next) => {
 
-
-
     res.render('reports-sales', {
-    
+
   });
 });
 
