@@ -507,6 +507,9 @@ app.get("/admin-reports", function(req, res) {
 });
 
 
+
+
+
 app.get("/customer", function(req, res) {
   console.log(req.cookies);
   res.render("customer");
@@ -813,6 +816,24 @@ app.get("/writefile", function(req, res, next) {
     res.send("The File : " + data.toString());
   });
 });
+
+app.get("/reports-inventory", (req, res, next) => {
+
+  getModel().list(10000, req.query.pageToken, (err, entities, cursor) => {
+    if (err) {
+      next(err);
+      return;
+    }
+
+
+    res.render('reports-inventory', {
+      movies: entities,
+
+      nextPageToken: cursor
+    });
+  });
+});
+
 
 //_______________________
 //|                     |
