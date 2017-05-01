@@ -523,10 +523,10 @@ app.get("/customer", function(req, res) {
 
 app.get("/customer-editinfo", function(req, res) {
   var userInfo = JSON.parse(req.cookies.userinfo);
-   getModel().getUser(userInfo.customer_id,(error, results) =>{
+   getModel().getUser(userInfo,(error, results) =>{
       if (error) {
        console.log(error);
-        next(error);
+        
       return;}
 
       console.log(results);
