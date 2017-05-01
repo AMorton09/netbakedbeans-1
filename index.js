@@ -709,7 +709,7 @@ app.get("/timewaster", function(req, res) {
     console.log('Waiting on server...');
 }
 
- setTimeout(function1(), 3000);
+ setTimeout(function1, 3000);
  res.redirect(`cart`);
 });
 
