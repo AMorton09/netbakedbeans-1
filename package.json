@@ -1,9 +1,14 @@
 {
   "name": "projectsrc",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "expresstut",
   "main": "index.js",
+  "engines":{
+    "node":"~6.10.1"
+  },
   "scripts": {
+    "start": "node index.js",
+    "deploy": "gclouddeploy",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
