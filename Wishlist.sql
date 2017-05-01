@@ -3,6 +3,7 @@ USE sakila;
 CREATE TABLE wish_list (
  
  wish_list_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+ customer_id varchar(50),
  film_id varchar(50),
  title varchar(50),
  description varchar(256),

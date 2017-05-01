@@ -77,7 +77,7 @@ app.post("/rent", (req, res, next) => {
       console.log(rentalDataSQL);
       getModel().addToCart(rentalDataSQL,(error, savedData) =>{
   });
-      res.redirect(`cart`);
+      res.redirect(`timewaster`);
 });
 
 app.post("/addtowishlist", (req, res, next) => {
@@ -703,6 +703,10 @@ app.get('/admin-movies', (req, res, next) => {
   });
 });
 
+app.get("/timewaster", function(req, res) {
+ res.redirect(`cart`);
+});
+
 app.get('/cart', (req, res, next) => {
   var userInfo = JSON.parse(req.cookies.userinfo);
   console.log("userINFO HERE:");
@@ -759,17 +763,18 @@ app.get('/checkout', (req, res, next) => {
 });
 
 app.get('/wishlist', (req, res, next) => {
-  getModel().getWishList(10000, req.query.pageToken, (err, entities, cursor) => {
+  var userInfo = JSON.parse(req.cookies.userinfo);
+  getModel().getWishList(userInfo,(err, entities) => {
     if (err) {
       next(err);
       return;
     }
-
+    console.log(entities);
 
     res.render('wishlist', {
       movies: entities,
 
-      nextPageToken: cursor
+      
     });
   });
 });

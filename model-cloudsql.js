@@ -90,19 +90,19 @@ function getMoviesInCart(custID, callback) {
   connection.end();
 }
 
-function getWishList(limit, token, callback) {
-  token = token ? parseInt(token, 10) : 0;
+function getWishList( userData,callback) {
+  
   const connection = getConnectionGCloudSql();
   connection.query(
-    'SELECT * FROM `wish_list` LIMIT ? OFFSET ?',
-    [limit, token],
+    'SELECT * FROM `wish_list` WHERE customer_id = ?',
+    userData.customer_id,
     (error, results) => {
       if (error) {
         callback(error);
         return;
       }
-      const hasMore = results.length === limit ? token + results.length : false;
-      callback(null, results, hasMore);
+      
+      callback(null, results);
     }
   );
   connection.end();
