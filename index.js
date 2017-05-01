@@ -61,7 +61,7 @@ app.post("/register", (req, res, next) => {
 
       console.log("SAVED DATA:====");
       console.log(savedData);
-      res.redirect(`registersuccess`);
+      res.render(`registersuccess`);
   });
 }
 else{
