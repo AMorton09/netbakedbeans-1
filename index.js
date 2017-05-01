@@ -61,7 +61,7 @@ app.post("/register", (req, res, next) => {
 
       console.log("SAVED DATA:====");
       console.log(savedData);
-      res.redirect(`login`);
+      res.redirect(`registersuccess`);
   });
 }
 else{
@@ -622,6 +622,10 @@ app.get("/welcome", function(req, res) {
 
 app.get("/register", function(req, res) {
   res.render("register");
+});
+
+app.get("/registersuccess", function(req, res) {
+  res.render("registersuccess");
 });
 
 app.get("/about", function(req, res) {
