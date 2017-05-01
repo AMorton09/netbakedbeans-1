@@ -510,14 +510,24 @@ app.get("/admin-reports", function(req, res) {
   res.render("admin-reports");
 });
 
-
-
-
-
 app.get("/customer", function(req, res) {
-  console.log(req.cookies);
-  res.render("customer");
+  var userInfo = JSON.parse(req.cookies.userinfo);
+   getModel().getUser(userInfo.customer_id,(error, results) =>{
+      if (error) {
+       console.log(error);
+        next(error);
+      return;}
+
+      console.log(results);
+
+
+
+      res.render("customer", {user: results});
 });
+});
+
+
+
 
 
 
@@ -528,7 +538,7 @@ app.get("/customer-editinfo", function(req, res) {
        console.log(error);
         next(error);
       return;}
-      
+
       console.log(results);
 
 
@@ -537,7 +547,7 @@ app.get("/customer-editinfo", function(req, res) {
 
 
   });
-  
+
 });
 
 app.get("/customer-editlogin", function(req, res) {
@@ -856,7 +866,7 @@ app.get("/reports-inventory", (req, res, next) => {
 app.get("/reports-rented", (req, res, next) => {
   getModel().getCurrentRentals((error, results) =>{
       console.log(results);
- 
+
 
     res.render('reports-rented', {
         movies: results
@@ -868,7 +878,7 @@ app.get("/reports-sales", (req, res, next) => {
 
     getModel().getSales((error, results) =>{
       console.log(results);
- 
+
 
     res.render('reports-sales', {
         sales: results
