@@ -53,7 +53,7 @@ app.post("/register", (req, res, next) => {
   var registerFormData = req.body;
 
   console.log(registerFormData);
-
+  if(registerFormData.password == registerFormData.cpassword){
   // Save the data to the database.
   getModel().registerUser(registerFormData, (error, savedData) => {
 
@@ -62,6 +62,10 @@ app.post("/register", (req, res, next) => {
       console.log(savedData);
       res.redirect(`login`);
   });
+}
+else{
+  res.render("passwordmatcherror");
+}
 });
 
 
