@@ -254,7 +254,7 @@ function getUser(user_id, callback) {
   const connection = getConnectionGCloudSql();
   connection.query(
     'SELECT * FROM `users` WHERE `customer_id` = ?',
-    user_id,
+    user_id.customer_id,
     (error, results) => {
       if (error) {
 

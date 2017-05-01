@@ -704,6 +704,12 @@ app.get('/admin-movies', (req, res, next) => {
 });
 
 app.get("/timewaster", function(req, res) {
+ function function1() {
+   
+    console.log('Waiting on server...');
+}
+
+ setTimeout(function1(), 3000);
  res.redirect(`cart`);
 });
 
