@@ -1,3 +1,4 @@
+
 <div class="page-header">
   {{>bsnavbar2}}
   <style>
@@ -6,6 +7,7 @@
 }
 </style>
 <h3>Register new account</h3>
+<form data-toggle="validator" role="form">
 <form class="form-horizontal"  method = "post">
 
 <div class="form-group">
@@ -32,12 +34,25 @@
     <input name="email" required="true" class="form-control" type="email" id="email" value=""/>
 </div>
 
-<div class="form-group">
 
-    <label class="control-label" for="password">Password:</label>
-    <input name="password" required="true" class="form-control" type="password" id="password" value=""/>
-</div>
-<div class="form-group">
+
+  <div class="form-group">
+    <label for="password" class="control-label">Password:</label>
+    <div class="help-block" style="color:white" >Minimum of 8 characters, must include one capital letter(these rules haven't been set)</div>
+    <div class="form-inline row">
+
+      <div class="form-group col-sm-6">
+
+        <input type="password" data-minlength="8" class="form-control" id="password" placeholder="Password" required>
+
+      </div><br></br>
+
+      <div class="form-group col-sm-6">
+        <input type="password" class="form-control" id="inputPasswordConfirm" data-match="#password" data-match-error="Whoops, these don't match" placeholder="Confirm" required>
+        <div class="help-block with-errors"></div>
+      </div>
+    </div>
+  </div>
 
 <label class="control-label" style="text-align:center">Favorite Category</label><br>
  <input type="radio" name="category" value="Action" checked="checked"> Action
@@ -70,5 +85,5 @@
 
 </form>
 
-
+</form>
 </div>

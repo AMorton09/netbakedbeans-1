@@ -6,7 +6,7 @@ how we did it in ours to finish needs to be added into the con
 
 ADD readme.md done in markdown
 
-have an after were done we should of done this pow-wow
+
 
 ADD markdown package put this into trello
 
