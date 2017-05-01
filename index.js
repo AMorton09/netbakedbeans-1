@@ -512,18 +512,7 @@ app.get("/admin-reports", function(req, res) {
 
 app.get("/customer", function(req, res) {
   var userInfo = JSON.parse(req.cookies.userinfo);
-   getModel().getUser(userInfo.customer_id,(error, results) =>{
-      if (error) {
-       console.log(error);
-        next(error);
-      return;}
-
-      console.log(results);
-
-
-
-      res.render("customer", {user: results});
-});
+ res.render("customer", {user: userInfo});
 });
 
 
