@@ -1,11 +1,8 @@
 <div class="page-header">
   {{>bsnavbar2}}
-  <style>
-    * {
- color: white;
-}
+
 </style>
-<h3>About Us</h3>
+<h3>Browse Movies</h3>
 <br><br>
 <form name="form-search" method="post" action="/search">
   Search: <input name="search"  value=""/><br>
@@ -64,7 +61,7 @@
        <input name="category" type="hidden" value="{{this.category}}"/>
       <td bgcolor="grey" width="15%"><button id="rent"  type="submit"class="btn btn-default"> Rent </button></td>
     </form>
-   
+
     <form method="post" action="/addtowishlist">
        <input name="film_id" type="hidden" value="{{this.film_id}}"/>
        <input name="title" type="hidden" value="{{this.title}}"/>
@@ -87,4 +84,3 @@
 
 
 </div>
-
