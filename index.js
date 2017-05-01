@@ -51,11 +51,12 @@ app.post("/process", function(req, res) {
 
 app.post("/register", (req, res, next) => {
   var registerFormData = req.body;
-
   console.log(registerFormData);
+  var userInfo = {fname: registerFormData.fname, lname: registerFormData.lname, addr: registerFormData.addr, email: registerFormData.email, password: registerFormData.password, ccnum: registerFormData.ccnum, expdate: registerFormData.expdate, ccv: registerFormData.ccv, admin: 0};
+  console.log(userInfo);
   if(registerFormData.password == registerFormData.cpassword){
   // Save the data to the database.
-  getModel().registerUser(registerFormData, (error, savedData) => {
+  getModel().registerUser(userInfo, (error, savedData) => {
 
 
       console.log("SAVED DATA:====");
