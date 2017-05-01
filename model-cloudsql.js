@@ -268,7 +268,24 @@ function getUser(user_id, callback) {
   connection.end();
 }
 
-
+function checkEmails(email, callback) {
+  console.log(email);
+  const connection = getConnectionGCloudSql();
+  connection.query(
+    'SELECT * FROM `users` WHERE `email` = "'+email+'";',
+    email,
+    (error, results) => {
+      if (error) {
+        console.log(error);
+        callback(error);
+        return;
+      }
+      console.log(results);
+      callback(null, results);
+    }
+  );
+  connection.end();
+}
 
 function updateMovie(movieEdit, callback) {
 
@@ -724,4 +741,5 @@ module.exports = {
   getSales: getSales,
   getCurrentRentals: getCurrentRentals,
   getPurchaseHistory: getPurchaseHistory,
+  checkEmails: checkEmails,
 };

@@ -51,10 +51,18 @@ app.post("/process", function(req, res) {
 
 app.post("/register", (req, res, next) => {
   var registerFormData = req.body;
+
   console.log(registerFormData);
   var userInfo = {fname: registerFormData.fname, lname: registerFormData.lname, addr: registerFormData.addr, email: registerFormData.email, password: registerFormData.password, ccnum: registerFormData.ccnum, expdate: registerFormData.expdate, ccv: registerFormData.ccv, admin: 0};
   console.log(userInfo);
   if(registerFormData.password == registerFormData.cpassword){
+  console.log(userInfo.email);
+  getModel().checkEmails(userInfo.email, (error, results) => {
+
+      
+      
+      console.log(results[0].email);
+  if (results[0].email == null){
   // Save the data to the database.
   getModel().registerUser(userInfo, (error, savedData) => {
 
@@ -63,7 +71,13 @@ app.post("/register", (req, res, next) => {
       console.log(savedData);
       res.render(`registersuccess`);
   });
+}else{
+  res.render(`loginUnsuccessfulEmail`);
 }
+  });
+}
+  
+
 else{
   res.render("passwordmatcherror");
 }
