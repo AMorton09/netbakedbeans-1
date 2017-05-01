@@ -38,14 +38,14 @@
 
 <div class="form-group">
 
-    <label class="control-label" for="password">Password:</label>
-    <input name="password" required="true" class="form-control" type="password" id="password" value="{{this.password}}"/>
+    <label class="control-label" for="password">("Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters") Password:</label>
+    <input name="password" required="true" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" type="password" id="password" value="{{this.password}}"/>
 </div>
 
 <div class="form-group">
 
-    <label class="control-label" for="password">Confirm Password:</label>
-    <input name="cpassword" required="true" class="form-control" type="password" id="cpassword" value="{{this.password}}"/>
+    <label class="control-label" for="password">("Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters") Confirm Password:</label>
+    <input name="cpassword" required="true" class="form-control"  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" type="password" id="cpassword" value="{{this.password}}"/>
 </div>
 
 <label class="control-label" style="text-align:center">Favorite Category</label><br>
