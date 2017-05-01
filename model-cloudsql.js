@@ -17,6 +17,24 @@ function getConnectionGCloudSql() {
   return mysql.createConnection(options);
 }
 
+function getPurchaseHistory(custID, callback) {
+
+  const connection = getConnectionGCloudSql();
+  connection.query(
+    'SELECT * FROM `rentedMovies` WHERE `customer_id` = '+custID.customer_id+'',
+    custID.customer_id,
+    (error, results) => {
+      if (error) {
+        console.log(error);
+        return;
+      }
+
+      callback(null, results);
+    }
+  );
+  connection.end();
+}
+
 function getCart(custID, callback) {
 
   const connection = getConnectionGCloudSql();
@@ -705,4 +723,5 @@ module.exports = {
   sort: sort,
   getSales: getSales,
   getCurrentRentals: getCurrentRentals,
+  getPurchaseHistory: getPurchaseHistory,
 };

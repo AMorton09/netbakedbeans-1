@@ -589,10 +589,10 @@ app.get("/customer-returnmovies", function(req, res) {
 });
 
 
-app.get("/customer-purchasehistory", function(req, res) {var userInfo = JSON.parse(req.cookies.userinfo);
-console.log("userINFO HERE:");
-console.log(userInfo);
-getModel().getCart(userInfo, (err, entities) => {
+app.get("/customer-purchasehistory", function(req, res) {
+var userInfo = JSON.parse(req.cookies.userinfo);
+
+getModel().getPurchaseHistory(userInfo, (err, entities) => {
   if (err) {
     next(err);
     return;
