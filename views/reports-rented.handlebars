@@ -14,28 +14,29 @@
 
 <h3>Currently Rented Movies</h3>
 <br><br>
-
 <table bgcolor="grey" cellpadding="10">
+  <br><br>
+
+  <br><br>
   <tr>
     <th bgcolor="black" width="15%">Title</th>
     <th bgcolor="black" width="70%">Description</th>
-    <th bgcolor="black" width="10%">Category</th>
-    <th bgcolor="black" width="15%">Price</th>
-    <th bgcolor="black" width="15%">Stock</th>
+    <th bgcolor="black" width="30%">Category</th>
+    <th bgcolor="black" width="30%">Price</th>
 
   </tr>
 </table>
 
 {{#each movies}}
+
 <table bgcolor="grey" cellpadding="10">
 
 
   <tr>
     <td bgcolor="grey" width="15%">{{this.title}}</td>
-    <td bgcolor="grey" width="70%">{{this.description}}</td>
-    <td bgcolor="grey" width="10%">{{this.category}}</td>
-    <td bgcolor="grey" width="15%">{{this.rental_rate}}</td>
-    <td bgcolor="grey" width="15%">{{this.stock}}</td>
+    <td bgcolor="darkgrey" width="70%">{{this.description}}</td>
+    <td bgcolor="grey" width="30%">{{this.category}}</td>
+    <td bgcolor="darkgrey" width="30%">{{this.rental_rate}}</td>
     <form>
        <input name="film_id" type="hidden" value="{{this.film_id}}"/>
        <input name="title" type="hidden" value="{{this.title}}"/>

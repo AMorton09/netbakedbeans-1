@@ -1,10 +1,14 @@
 <div class="page-header">
   {{>navbaradmin}}
+
   <style>
-      body: {
+      * {
    color: white;
   }
-  td: {
+  input{
+    color : black;
+  }
+  td {
   color: black;
   }
   </style>
@@ -18,12 +22,13 @@
     <th bgcolor="black">Description</th>
     <th bgcolor="black">Category</th>
     <th bgcolor="black">Rating</th>
-
+    <th bgcolor="black">Remove</th>
+    <th bgcolor="black">Edit</th>
   </tr>
   <tr>
     <td bgcolor="grey" width="15%">{{this.title}}</td>
     <td bgcolor="grey" width="70%">{{this.description}}</td>
-    <td bgcolor="grey" width="70%">{{this.category}}</td>
+    <td bgcolor="grey" width="25%">{{this.category}}</td>
     <td bgcolor="grey" width="15%">{{this.rating}}</td>
     <td bgcolor="grey" width="15%">
 

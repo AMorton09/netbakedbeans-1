@@ -58,7 +58,7 @@ function getSales(callback) {
   const connection = getConnectionGCloudSql();
   connection.query(
     'SELECT * FROM `sales` WHERE `sales_id` = 1',
-   
+
     (error, results) => {
       if (error) {
         console.log(error);
@@ -109,7 +109,7 @@ function getMoviesInCart(custID, callback) {
 }
 
 function getWishList( userData,callback) {
-  
+
   const connection = getConnectionGCloudSql();
   connection.query(
     'SELECT * FROM `wish_list` WHERE customer_id = ?',
@@ -119,7 +119,7 @@ function getWishList( userData,callback) {
         callback(error);
         return;
       }
-      
+
       callback(null, results);
     }
   );
@@ -699,7 +699,6 @@ function getCurrentRentals( callback) {
         console.log(error);
         return;
       }
-
       callback(null, results);
     }
   );
