@@ -1,10 +1,13 @@
 <div class="page-header">
   {{>navbaradmin}}
-<style>
-    * {
- color: white;
-}
-</style>
+  <style>
+      body: {
+   color: white;
+  }
+  td: {
+  color: black;
+  }
+  </style>
 <br><br>
 
 {{#each movies}}
@@ -15,7 +18,7 @@
     <th bgcolor="black">Description</th>
     <th bgcolor="black">Category</th>
     <th bgcolor="black">Rating</th>
-  
+
   </tr>
   <tr>
     <td bgcolor="grey" width="15%">{{this.title}}</td>
@@ -23,7 +26,7 @@
     <td bgcolor="grey" width="70%">{{this.category}}</td>
     <td bgcolor="grey" width="15%">{{this.rating}}</td>
     <td bgcolor="grey" width="15%">
-    
+
     <form method="post" action="/removemovie">
       <input name="film_id" type="hidden" value="{{this.film_id}}"/>
       <button  type="submit"class="btn btn-default">  X  </button></td>
