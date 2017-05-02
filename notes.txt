@@ -1,6 +1,4 @@
-ideal
-caching auth into a browser session cookie with variable name is logged in as a key name with bool of t/f look into this
-how we did it in ours to finish needs to be added into the con
+
 
 deploy:  /Users/johnpizzitola/source/google-cloud-sdk/bin/gcloud app deploy /Users/johnpizzitola/source/netbakedbeans/app.yaml --version 1
 

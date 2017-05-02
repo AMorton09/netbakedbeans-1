@@ -6,24 +6,24 @@ var app = express();
 
 // keeps server info out of header
 app.disable("x-powered-by");
-
+//parses body data
 var formidable = require("formidable");
-
+//import for handling user credentials with google/ cookies
 var credentials = require("./credentials.js");
 app.use(require("cookie-parser")(credentials.cookieSecret));
-
+//imports handlebars (templating)
 var handlebars = require("express-handlebars").create({
   defaultLayout: "main"
 });
 app.engine("handlebars", handlebars.engine);
 app.set("view engine", "handlebars");
-
+//parses body data
 app.use(require("body-parser").urlencoded({ extended: true }));
-
+//sets port for all local hosting
 app.set("port", process.env.PORT || 3000);
 
 
-
+//requires model-cloudsql which contains each sql get method
 function getModel() {
   return require(`./model-cloudsql`);
 }
@@ -48,6 +48,7 @@ app.post("/process", function(req, res) {
 });
 
 
+//app.post for registration.
 
 app.post("/register", (req, res, next) => {
   var registerFormData = req.body;
@@ -61,12 +62,12 @@ app.post("/register", (req, res, next) => {
 
 
 
-  try{ 
+  try{
   if (results[0].email != null ){
-  
+
   res.render(`registeremailtaken`);
 }} catch (e){
-  
+
   getModel().registerUser(userInfo, (error, savedData) => {
 
 
@@ -84,7 +85,7 @@ else{
 }
 });
 
-
+// post method for renting movie
 app.post("/rent", (req, res, next) => {
       var rentalData = req.body;
       var userInfo = JSON.parse(req.cookies.userinfo);
@@ -94,7 +95,7 @@ app.post("/rent", (req, res, next) => {
   });
       res.redirect(`timewaster`);
 });
-
+//post method for adding movies to wish list
 app.post("/addtowishlist", (req, res, next) => {
       var rentalData = req.body;
       var userInfo = JSON.parse(req.cookies.userinfo);
@@ -106,7 +107,7 @@ app.post("/addtowishlist", (req, res, next) => {
 });
 
 
-
+//app.post method for updating user information
 app.post("/updateuser", (req, res, next) => {
       var userEdit = req.body;
 
@@ -124,7 +125,7 @@ app.post("/updateuser", (req, res, next) => {
   });
 
 });
-
+//app.post method for updating movie info
 app.post("/updatemovie", (req, res, next) => {
       var movieEdit = req.body;
 
@@ -141,7 +142,7 @@ app.post("/updatemovie", (req, res, next) => {
   });
       res.redirect(`admin-movies`);
 });
-
+//app.post method for retrieving movie info
 app.post("/getmovie", (req, res, next) => {
       var filmID = req.body;
 
@@ -162,7 +163,7 @@ app.post("/getmovie", (req, res, next) => {
   });5
 
 });
-
+//app.post method for retrieving specific user info
 app.post("/getuser", (req, res, next) => {
       var userID = req.body;
 
@@ -184,7 +185,7 @@ app.post("/getuser", (req, res, next) => {
 
 });
 
-
+//app.post method for adding an employee
 app.post("/addemployee", (req, res, next) => {
   var registerFormData = req.body;
 
@@ -203,7 +204,7 @@ app.post("/addemployee", (req, res, next) => {
   });
 });
 
-
+//app.post method for adding a movie
 app.post("/addmovie", (req, res, next) => {
   var registerFormData = req.body;
   //registerFormData.push({admin: 0});
@@ -234,7 +235,7 @@ app.post("/file-upload/:year/:month", function(req, res) {
     res.redirect(303, "/thankyou");
   });
 });
-
+//app.post method for removing items from cart
 app.post("/removefromcart", (req, res, next) => {
       var cartID = req.body;
       console.log(cartID);
@@ -244,7 +245,7 @@ app.post("/removefromcart", (req, res, next) => {
       console.log("i ran here");
       res.redirect(`cart`);
 });
-
+//app.post method for removing an item from wish list
 app.post("/removefromwishlist", (req, res, next) => {
       var wish_list_id = req.body;
       console.log(wish_list_id);
@@ -256,7 +257,7 @@ app.post("/removefromwishlist", (req, res, next) => {
 
       res.redirect(`wishlist`);
 });
-
+//app.post method for removing an item from checkout cart list
 app.post("/removefromcheckout", (req, res, next) => {
       var cartID = req.body;
       console.log(cartID);
@@ -266,7 +267,7 @@ app.post("/removefromcheckout", (req, res, next) => {
       console.log("i ran here");
       res.redirect(`checkout`);
 });
-
+//app.post method for removing movie from database
 app.post("/removemovie", (req, res, next) => {
       var film_id = req.body;
       console.log(film_id);
@@ -276,7 +277,7 @@ app.post("/removemovie", (req, res, next) => {
       console.log("i ran here");
       res.redirect(`admin-movies`);
 });
-
+//app.post method for removing a user from database
 app.post("/removeuser", (req, res, next) => {
       var customerID = req.body;
       console.log(customerID);
@@ -288,7 +289,7 @@ app.post("/removeuser", (req, res, next) => {
       res.redirect(`allusers`);
 });
 
-
+//app.post method for searching through movies
 app.post("/search", (req, res, next) => {
       var searchTerm = req.body;
 
@@ -304,7 +305,7 @@ app.post("/search", (req, res, next) => {
      res.render("movies", {movies: results});
 });
   });
-
+//app.post method for sorting through movies
 app.post("/sort", (req, res, next) => {
       var sortTerm = req.body;
 
@@ -324,7 +325,7 @@ app.post("/sort", (req, res, next) => {
 });
 
 
-
+//app.post method for 
 app.post("/loginAuth", (req, res, next) => {
  var loginFormData = req.body;
 
