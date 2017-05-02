@@ -213,10 +213,10 @@ app.post("/addmovie", (req, res, next) => {
   getModel().addMovie(registerFormData, (error, savedData) => {
 
 
-
+    console.log(results);
 
   });
-  res.redirect(`login`);
+  res.redirect(`admin-home`);
 });
 
 
@@ -685,7 +685,7 @@ app.get('/allusers', (req, res, next) => {
 
 app.get('/movies', (req, res, next) => {
 
-  getModel().list(10000, req.query.pageToken, (err, entities, cursor) => {
+  getModel().listCustomer(10000, req.query.pageToken, (err, entities, cursor) => {
     if (err) {
       next(err);
       return;

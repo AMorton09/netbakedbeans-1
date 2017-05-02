@@ -144,14 +144,30 @@ function listUsers(limit, token, callback) {
   connection.end();
 }
 
-
-
-// [START list]
 function list(limit, token, callback) {
   token = token ? parseInt(token, 10) : 0;
   const connection = getConnectionGCloudSql();
   connection.query(
     'SELECT * FROM `film` LIMIT ? OFFSET ?',
+    [limit, token],
+    (error, results) => {
+      if (error) {
+        callback(error);
+        return;
+      }
+      const hasMore = results.length === limit ? token + results.length : false;
+      callback(null, results, hasMore);
+    }
+  );
+  connection.end();
+}
+
+// [START list]
+function listCustomer(limit, token, callback) {
+  token = token ? parseInt(token, 10) : 0;
+  const connection = getConnectionGCloudSql();
+  connection.query(
+    'SELECT * FROM `film` where `stock` > 0;',
     [limit, token],
     (error, results) => {
       if (error) {
@@ -380,13 +396,13 @@ function addMovie(movieData, callback) {
   const gcloudSqlConnection = getConnectionGCloudSql();
 
     gcloudSqlConnection.query(
-      'INSERT INTO `film` (title, description, release_year, language_id, original_language_id, rental_duration, rental_rate, length, replacement_cost, rating, special_features, category ) VALUES ("'+movieData.title+'","'+movieData.description+'","'+movieData.release_year+'",'+1+','+1+','+3+','+movieData.rental_rate+','+movieData.length+','+29.95+',"'+movieData.rating+'", "Trailers", "'+movieData.category+'")',
+      'INSERT INTO `film` (title, description, release_year, language_id, original_language_id, rental_duration, rental_rate, length, replacement_cost, rating, special_features, category, stock ) VALUES ("'+movieData.title+'","'+movieData.description+'","'+movieData.release_year+'",'+1+','+1+','+3+','+movieData.rental_rate+','+movieData.length+','+29.95+',"'+movieData.rating+'", "Trailers", "'+movieData.category+'", '+movieData.stock+')',
 
 (error, response) => {
         //sends error to app.js to display 500 error
         if (error) {
           callback(error);
-
+          console.log(error);
           return;
         }
         console.log('it worked!');
@@ -741,4 +757,5 @@ module.exports = {
   getCurrentRentals: getCurrentRentals,
   getPurchaseHistory: getPurchaseHistory,
   checkEmails: checkEmails,
+  listCustomer: listCustomer,
 };
