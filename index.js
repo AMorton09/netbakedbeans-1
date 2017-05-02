@@ -59,10 +59,10 @@ app.post("/register", (req, res, next) => {
   console.log(userInfo.email);
   getModel().checkEmails(userInfo.email, (error, results) => {
 
-      
-      
+
+
       console.log(results[0].email);
-  if (results[0].email == null){
+  if (results[0].email == null || results == undefined){
   // Save the data to the database.
   getModel().registerUser(userInfo, (error, savedData) => {
 
@@ -72,11 +72,11 @@ app.post("/register", (req, res, next) => {
       res.render(`registersuccess`);
   });
 }else{
-  res.render(`loginUnsuccessfulEmail`);
+  res.render(`registeremailtaken`);
 }
   });
 }
-  
+
 
 else{
   res.render("passwordmatcherror");
@@ -540,7 +540,7 @@ app.get("/customer-editinfo", function(req, res) {
    getModel().getUser(userInfo,(error, results) =>{
       if (error) {
        console.log(error);
-        
+
       return;}
 
       console.log(results);
@@ -719,7 +719,7 @@ app.get('/admin-movies', (req, res, next) => {
 
 app.get("/timewaster", function(req, res) {
  function function1() {
-   
+
     console.log('Waiting on server...');
 }
 
@@ -794,7 +794,7 @@ app.get('/wishlist', (req, res, next) => {
     res.render('wishlist', {
       movies: entities,
 
-      
+
     });
   });
 });
