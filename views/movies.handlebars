@@ -1,7 +1,18 @@
 <div class="page-header">
   {{>bsnavbar2}}
 
-</style>
+  <style>
+      * {
+   color: white;
+  }
+  input{
+    color : black;
+  }
+  td {
+  color: black;
+  }
+  </style>
+
 <h3>Browse Movies</h3>
 <br><br>
 <form name="form-search" method="post" action="/search">
@@ -29,7 +40,7 @@
 
 
 {{#each movies}}
-<table bgcolor="grey" cellpadding="10">
+<table color="black" cellpadding="10">
 
   <tr>
     <th bgcolor="black">Title</th>
