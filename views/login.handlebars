@@ -1,5 +1,6 @@
 <div class="page-header">
 <style>
+<<<<<<< Updated upstream
 
       * {
    color: white;
@@ -12,28 +13,36 @@
   }
   </style>
 
-    
+
+=======
+    body {
+ color: white;
+}
+td {
+color: black;
+}
+</style>
 >>>>>>> Stashed changes
 
 <h3 ><img src="/img/icon_cv.png"> Welcome to Crimson Video</h3>
 <h2 > Login </h2>
 <br><br>
 <form action = "/loginAuth" method = "post">
-<div class="form-group">
+<div class="form-group" >
 
     <label  class="control-label" for="email">Email:</label>
-    <input name="email" required="true" class="form-control" type="email" id="email" value=""/>
+    <input name="email" \required="true" class="form-control" placeholder="example@netbakedbeans.com" type="email" id="email" value=""/>
 </div>
 
 <div class="form-group">
 
     <label  class="control-label" for="password">Password:</label>
-    <input name="password" required="true" class="form-control" type="password" id="password" value=""/>
+    <input name="password" required="true" class="form-control" placeholder="password" type="password" id="password" value=""/>
 </div>
 
 <button type="submit"  class="btn btn-default"> Login </button>
 </form>
+</div>
 <form action="/register" >
     <button type="submit"  class="btn btn-default"> Register New Account </button>
 </form>
-</div>
