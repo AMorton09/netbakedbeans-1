@@ -61,9 +61,12 @@ app.post("/register", (req, res, next) => {
 
 
 
-      console.log(results[0].email);
-  if (results[0].email == null || results == undefined){
-  // Save the data to the database.
+  try{ 
+  if (results[0].email != null ){
+  
+  res.render(`registeremailtaken`);
+}} catch (e){
+  
   getModel().registerUser(userInfo, (error, savedData) => {
 
 
@@ -71,8 +74,6 @@ app.post("/register", (req, res, next) => {
       console.log(savedData);
       res.render(`registersuccess`);
   });
-}else{
-  res.render(`registeremailtaken`);
 }
   });
 }
